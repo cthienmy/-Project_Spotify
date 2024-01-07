@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="footer-middelBottom">
-        <div class="footer-middelBottomTime">0:00</div>
+        <div class="footer-middelBottomTime">00:00</div>
         <div class="footer-middelBottomPlay">
           <input class="rangebar" type="range" value="0" />
           <!--  -->
