@@ -21,33 +21,50 @@
     <!--footer-middel  -->
     <div class="footer-middel">
       <div class="footer-middelTop">
-        <div class="footer-middelTop1">1x</div>
-        <div class="footer-middelTop2">
-          <ion-icon name="play-back-outline"></ion-icon>
-        </div>
-        <div class="footer-middelTop2">
+        <!-- * play Speed -->
+        <button class="footer-middelTop1" type="radio" v-on:click="playSpeed()">
+          2x
+        </button>
+        <!-- * loop Song -->
+        <button class="footer-middelTop1" v-on:click="playLoop()">
+          <ion-icon name="shuffle-outline"></ion-icon>
+        </button>
+        <!-- * back Song -->
+        <button
+          class="footer-middelTop1"
+          v-on:click="backSong()"
+          v-bind:disabled="index === 0"
+        >
           <ion-icon name="play-skip-back-outline"></ion-icon>
-        </div>
-        <!-- button Play -->
-        <audio v-bind:src="containerFooterlistRow[0].music"></audio>
-        <button class="footer-middelTop3">
+        </button>
+        <!-- * button Play -->
+        <audio id="enter-audio"></audio>
+        <button
+          v-if="run === false"
+          class="footer-middelTop3"
+          v-on:click="enterPlay()"
+        >
           <ion-icon name="play-circle-outline"></ion-icon>
         </button>
-        <!--  -->
-        <div class="footer-middelTop2">
+        <!-- * button pause -->
+        <button v-else class="footer-middelTop3" v-on:click="enterPause()">
+          <ion-icon name="pause-circle-outline"></ion-icon>
+        </button>
+        <!-- * next Song -->
+        <button class="footer-middelTop1" v-on:click="nextSong()">
           <ion-icon name="play-skip-forward-outline"></ion-icon>
-        </div>
-        <div class="footer-middelTop2">
-          <ion-icon name="play-forward-outline"></ion-icon>
-        </div>
+        </button>
       </div>
+      <!-- * thanh bar % -->
       <div class="footer-middelBottom">
-        <div class="footer-middelBottomTime">00:00</div>
+        <div class="footer-middelBottomTime">
+          {{ timePlay }}
+        </div>
         <div class="footer-middelBottomPlay">
-          <input class="rangebar" type="range" value="0" />
+          <input class="rangebar" type="range" v-bind:value="value" />
           <!--  -->
         </div>
-        <div class="footer-middelBottomTime">17:34</div>
+        <div class="footer-middelBottomTime">{{ totleTime }}</div>
       </div>
     </div>
     <!--footer-right -->
@@ -64,7 +81,9 @@
       <div class="footer-right2">
         <ion-icon name="volume-high-outline"></ion-icon>
       </div>
-      <div class="footer-right3"></div>
+      <!-- * volume bar -->
+      <input class="footer-right3" type="range" v-bind:value="valueVolume" />
+      <!--  -->
       <button class="footer-right2">
         <ion-icon name="desktop-outline"></ion-icon>
       </button>
@@ -79,9 +98,156 @@ export default {
     containerFooter: Object,
   },
   data() {
-    return {};
+    return {
+      tagAudio: null,
+      run: false,
+      index: 0,
+      timePlay: "00:00",
+      totleTime: "",
+      value: "0",
+      statusLoop: false,
+      valueVolume: "100",
+    };
   },
-  methods: {},
+  methods: {
+    enterPlay: function () {
+      if (this.tagAudio === null) {
+        // * khởi tạo thẻ Audio(link_mp3)
+        this.tagAudio = new Audio(
+          this.containerFooter.listRow[this.index].music
+        );
+
+        console.log("index:", this.index);
+        console.log(
+          "audio play:",
+          this.tagAudio.src.replace("http://localhost:5173", "")
+        );
+        // nếu mới đầu nếu tagAudio null -> khởi tạo thẻ Audio chứa link bài hát ở vị trí index=0
+        // sau đó  run: False-> True ->phat bài hat
+        console.log("run", this.run);
+        // *.play()->phat bài hát
+        this.tagAudio.play();
+        this.run = !this.run;
+        console.log("run", this.run);
+
+        // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
+        this.tagAudio.ontimeupdate = () => {
+          // arrow function thay vì ghi /this.tagAudio.ontimeupdate = function() {}/
+          // vì arrFun ko có this của nó, còn Func nào cũng sẽ có this đại diện cho func đó
+
+          this.timePlay = this.tagAudio.currentTime / 60;
+          this.totleTime = this.tagAudio.duration / 60;
+          // lấy thời gian chạy hiện tại chia cho tổng thời gian bài hát *100 = % dung lg bài hát chạy hiên tại
+          // để gán vào thuộc tính value của thanh bar có tổng 100%
+          this.value =
+            (this.tagAudio.currentTime / this.tagAudio.duration) * 100;
+
+          // * tự động chuyển bài khi phát hết
+          if (this.timePlay === this.totleTime) {
+            this.index = this.index + 1;
+            console.log(
+              "index+1:",
+              this.index,
+              ";",
+              this.containerFooter.listRow[this.index].music
+            );
+
+            this.tagAudio = new Audio(
+              this.containerFooter.listRow[this.index].music
+            );
+            this.tagAudio.play();
+            // phải bắt lại vị trí hiện tại của bài hát mới
+            this.tagAudio.ontimeupdate = () => {
+              this.timePlay = this.tagAudio.currentTime / 60;
+              console.log("timePlay:", this.timePlay);
+              this.totleTime = this.tagAudio.duration / 60;
+              console.log("totleTime:", this.totleTime);
+              this.value =
+                (this.tagAudio.currentTime / this.tagAudio.duration) * 100;
+            };
+          }
+        };
+      } else {
+        if (
+          // căt di kí tự trong"" và thay băng ""-> mục dich lay link bai hat ra riêng de so sánh
+          this.tagAudio.src.replace("http://localhost:5173", "") !=
+          this.containerFooter.listRow[this.index].music
+        ) {
+          this.tagAudio = new Audio(
+            this.containerFooter.listRow[this.index].music
+          );
+
+          this.tagAudio.play();
+
+          this.run = !this.run;
+          console.log("run", this.run);
+        } else {
+          this.tagAudio.play();
+          this.totleTime = this.tagAudio.currentTime;
+          console.log("totleTime:", this.totleTime, "/");
+          this.run = !this.run;
+          console.log("run s", this.run);
+        }
+      }
+      this.tagAudio.volume = 1.0;
+      this.valueVolume = this.tagAudio.volume * 100;
+      console.log("volume:", (this.tagAudio.volume = 1.0));
+    },
+    enterPause: function () {
+      // dừng bài hat
+      this.tagAudio.pause();
+      this.run = !this.run;
+      console.log("run s", this.run);
+    },
+    nextSong: function () {
+      this.index = this.index + 1;
+      console.log(
+        "index+1:",
+        this.index,
+        ";",
+        this.containerFooter.listRow[this.index].music
+      );
+      this.tagAudio.pause();
+
+      this.tagAudio = new Audio(this.containerFooter.listRow[this.index].music);
+      this.tagAudio.play();
+    },
+    backSong: function () {
+      this.index = this.index - 1;
+      console.log(
+        "index-1:",
+        this.index,
+        ";",
+        this.containerFooter.listRow[this.index].music
+      );
+      this.tagAudio.pause();
+      this.tagAudio = new Audio(this.containerFooter.listRow[this.index].music);
+      this.tagAudio.play();
+    },
+    playLoop: function () {
+      if (this.statusLoop === false) {
+        // tự động lặp lại
+        console.log("statusloop1:", this.statusLoop);
+
+        this.tagAudio.loop = true;
+        console.log("loop:", this.tagAudio.loop);
+
+        this.statusLoop = !this.statusLoop;
+        console.log("statusloop2:", this.statusLoop);
+      } else {
+        console.log("statusloop3:", this.statusLoop);
+
+        this.tagAudio.loop = false;
+        console.log("loop:", this.tagAudio.loop);
+
+        this.statusLoop = !this.statusLoop;
+        console.log("statusloop4:", this.statusLoop);
+      }
+    },
+    playSpeed: function () {
+      this.tagAudio.playbackRate = 8;
+    },
+  },
 };
 </script>
 
@@ -136,21 +302,32 @@ export default {
 }
 
 .footer-middelTop1 {
-  font-size: 15px;
-  margin: 0 15px;
-  align-self: center;
-  font-weight: bold;
-}
-.footer-middelTop2 {
   font-size: 20px;
   margin: 0 15px;
   align-self: center;
   display: flex;
+  padding: 0;
+  cursor: auto;
+  background-color: black;
+  color: rgb(179, 179, 179);
+  border: none;
 }
+.footer-middelTop1:hover {
+  color: white;
+}
+.footer-middelTop3:hover {
+  color: white;
+}
+
 .footer-middelTop3 {
   font-size: 35px;
   margin: 0 15px;
   display: flex;
+  padding: 0;
+  cursor: auto;
+  background-color: black;
+  color: rgb(179, 179, 179);
+  border: none;
 }
 .footer-middelBottom {
   display: flex;
@@ -180,7 +357,7 @@ export default {
   /* tao kieu cho nut keo trong thanh truot */
   -webkit-appearance: none;
   background: rgb(77, 77, 77);
-  width: 7px;
+  width: 0px;
   height: 5px;
   opacity: 1;
   box-shadow: -300px 0px 0px 300px rgb(30, 215, 96);
@@ -227,9 +404,19 @@ export default {
   width: 100px;
   height: 4px;
   border-radius: 5px;
+  -webkit-appearance: none;
+  /* none de ngan kieu hien thi mac dinh cuar thanh truot */
+  overflow: hidden;
   background-color: rgb(77, 77, 77);
   align-self: center;
   display: flex;
   margin: 0 7px 0 0;
+}
+/* tao kieu cho nut keo trong thanh truot */
+.footer-right3::-webkit-slider-thumb {
+  background: rgb(77, 77, 77);
+  width: 0px;
+  box-shadow: -300px 0px 0px 300px rgb(30, 215, 96);
+  -webkit-appearance: none;
 }
 </style>

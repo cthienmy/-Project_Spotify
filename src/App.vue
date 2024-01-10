@@ -180,6 +180,7 @@ export default {
             album: "Từng Quen",
             date: "2 weeks ago",
             time: "2:54",
+            music: "/music/BongDungMuonYeu-VickyNhung-12947755.mp3",
           },
           {
             titleImg: "/itemContentImg/hothitvietnam/hothitvietnam2.jpeg",
@@ -189,6 +190,8 @@ export default {
             album: "Những Lời Hứa Bỏ Quên",
             date: "5 days ago",
             time: "3:56",
+            music:
+              "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
           },
           {
             titleImg: "/itemContentImg/hothitvietnam/hothitvietnam3.jpeg",
@@ -198,6 +201,7 @@ export default {
             album: "Anh Là Ngoại Lệ Của Em",
             date: "2 weeks ago",
             time: "3:08",
+            music: "/music/DayXeBo-PhuongMyChiDTAP-9702223.mp3",
           },
           {
             titleImg: "/itemContentImg/hothitvietnam/hothitvietnam4.jpeg",
@@ -207,6 +211,7 @@ export default {
             album: "Từng Quen",
             date: "2 weeks ago",
             time: "4:28",
+            music: "/music/EmLaCoffee-JukySan-8567787.mp3",
           },
           {
             titleImg: "/itemContentImg/hothitvietnam/hothitvietnam5.jpeg",
@@ -216,6 +221,7 @@ export default {
             album: "Từng Quen",
             date: "2 weeks ago",
             time: "5:00",
+            music: "/music/NamQuaDaLamGi-BuiCongNam-8309403.mp3",
           },
           {
             titleImg: "/itemContentImg/hothitvietnam/hothitvietnam6.jpeg",
@@ -225,6 +231,7 @@ export default {
             album: "Từng Quen",
             date: "5 days ago",
             time: "3:20",
+            music: "/music/TheoEmVeNha-NgocMai-12748537.mp3",
           },
           {
             titleImg: "/itemContentImg/hothitvietnam/hothitvietnam7.jpeg",
@@ -234,6 +241,7 @@ export default {
             album: "Từng Quen",
             date: "2 weeks ago",
             time: "4:00",
+            music: "/music/TetNhaLaTetNhat-BuiCongNam-13231304.mp3",
           },
           {
             titleImg: "/itemContentImg/hothitvietnam/hothitvietnam8.jpeg",
@@ -243,6 +251,7 @@ export default {
             album: "Từng Quen",
             date: "2 weeks ago",
             time: "3:50",
+            music: "/music/HinhNhuTaThichNhau-DoanHieuBMZ-8107565.mp3",
           },
           {
             titleImg: "/itemContentImg/hothitvietnam/hothitvietnam9.jpeg",
@@ -252,6 +261,7 @@ export default {
             album: "Từng Quen",
             date: "2 weeks ago",
             time: "3:01",
+            music: "/music/HoaCoMuaXuan-VoHaTram-12592230.mp3",
           },
           {
             titleImg: "/itemContentImg/hothitvietnam/hothitvietnam10.jpeg",
@@ -261,6 +271,7 @@ export default {
             album: "Từng Quen",
             date: "2 weeks ago",
             time: "3:32",
+            music: "/music/VuTruCoAnh-PhuongMyChiDTAPPhao-9297066.mp3",
           },
         ],
       },
