@@ -8,19 +8,21 @@
           <h4>{{ item2.itemFooterH4 }}</h4>
           <p>{{ item2.itemFooterP }}</p>
         </div>
-        <audio v-bind:src="item2.firstMusic"></audio>
       </li>
     </a>
-    <buttonPlay v-on:click="clickPlayList()" />
+    <buttonPlay v-on:click="clickPlayList()" v-if="item2.run === false" />
+    <buttonPause v-on:click="clickPlayList()" v-else />
   </div>
 </template>
 
 <script>
 import buttonPlay from "./buttonPlay.vue";
+import buttonPause from "./buttonPause.vue";
 export default {
   name: "item2",
   components: {
     buttonPlay,
+    buttonPause,
   },
   props: {
     item2: Object,

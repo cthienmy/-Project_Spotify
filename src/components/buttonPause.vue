@@ -1,16 +1,12 @@
 <template>
   <button class="button-play">
-    <ion-icon name="caret-forward-outline"></ion-icon>
+    <ion-icon name="pause-outline"></ion-icon>
   </button>
 </template>
 
 <script>
 export default {
-  name: "buttonPlay",
-  props: {},
-  data() {
-    return {};
-  },
+  name: "buttonPause",
 };
 </script>
 

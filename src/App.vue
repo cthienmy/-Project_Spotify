@@ -142,7 +142,15 @@
       </div>
     </div>
     <!-- footer -->
-    <footerPlay v-bind:containerFooter="containerFooter" />
+    <footerPlay
+      v-bind:containerFooter="containerFooter"
+      v-bind:enterPlay="enterPlay()"
+      v-bind:enterPause="enterPause()"
+      v-bind:nextSong="nextSong()"
+      v-bind:backSong="backSong()"
+      v-bind:playLoop="playLoop()"
+      v-bind:playSpeed="playSpeed()"
+    />
   </div>
 </template>
 <script>
@@ -164,13 +172,22 @@ export default {
       itemClick: null,
       itemGo: "",
       albumClick: null,
+      //
+      tagAudio: null,
+      index: 0,
+      timePlay: "00:00",
+      totleTime: "",
+      value: "0",
+      statusLoop: false,
+      valueVolume: "100",
+      //
       containerFooter: {
         img: "/item2thienhanghegi.jpeg",
         itemFooterH4: "Thiên Hạ Nghe Gì",
         itemFooterP:
           "Những gì mà người bên cạnh bạn đang nghe. Ảnh bìa: Wren Evans",
         itemContentImg: "/itemContentImg/thienhanghegi/item2thienhanghegi.jpeg",
-        firstMusic: "/music/BongDungMuonYeu-VickyNhung-12947755.mp3",
+        run: false,
         listRow: [
           {
             titleImg: "/itemContentImg/hothitvietnam/hothitvietnam1.jpeg",
@@ -283,6 +300,7 @@ export default {
       list2: [
         {
           titleList: "Today's biggest hits",
+
           itemContent: [
             {
               img: "/item2thienhanghegi.jpeg",
@@ -291,7 +309,8 @@ export default {
                 "Những gì mà người bên cạnh bạn đang nghe. Ảnh bìa: Wren Evans",
               itemContentImg:
                 "/itemContentImg/thienhanghegi/item2thienhanghegi.jpeg",
-              firstMusic: "/music/BongDungMuonYeu-VickyNhung-12947755.mp3",
+              run: false,
+
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam1.jpeg",
@@ -405,8 +424,7 @@ export default {
 
               itemContentImg:
                 "/itemContentImg/hothitvietnam/item22hothitvn.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              run: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam2.jpeg",
@@ -520,7 +538,7 @@ export default {
               itemFooterP: "Viral, trending and taking off.",
               itemContentImg:
                 "/itemContentImg/viralhits/item23viralhothit.jpeg",
-              firstMusic: "/music/DayXeBo-PhuongMyChiDTAP-9702223.mp3",
+              run: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam3.jpeg",
@@ -637,7 +655,7 @@ export default {
               itemFooterP:
                 "The hottest songs you need to listen to right now. Cover: Reneé Rapp, Megan Thee Stallion",
               itemContentImg: "/itemContentImg/itahit/item24itahit.jpeg",
-              firstMusic: "/music/EmLaCoffee-JukySan-8567787.mp3",
+              run: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam4.jpeg",
@@ -752,7 +770,7 @@ export default {
               itemFooterP:
                 "All your favorite Disney hits, including songs from Wish.",
               itemContentImg: "/itemContentImg/disneyhit/item25disneyhit.jpeg",
-              firstMusic: "/music/EmLaCoffee-JukySan-8567787.mp3",
+              run: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam5.jpeg",
@@ -873,8 +891,7 @@ export default {
               itemFooterP:
                 "Rock legends & epic songs that continue to inspire generations. Cover: Queen",
               itemContentImg: "/21rock.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam6.jpeg",
@@ -985,8 +1002,7 @@ export default {
               itemFooterH4: "All Out 2010s",
               itemFooterP: "The biggest songs of the 2010s.",
               itemContentImg: "/22allout.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam7.jpeg",
@@ -1106,8 +1122,7 @@ export default {
               itemFooterH4: "Gold School",
               itemFooterP: "Taking it way back! Cover: G-Unit",
               itemContentImg: "/23goldchool.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam7.jpeg",
@@ -1219,8 +1234,7 @@ export default {
               itemFooterH4: "I Love My'90s Hip-Hop",
               itemFooterP: "Real rap music from the golden era.",
               itemContentImg: "/24ilovemy.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam8.jpeg",
@@ -1332,8 +1346,7 @@ export default {
               itemFooterP:
                 "Một số bài hát hay nhất trong 10 năm qua, trong playlist được lựa chọn theo sở thích của bạn.",
               itemContentImg: "/25nhgaihathaynhat.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam9.jpeg",
@@ -1460,8 +1473,7 @@ export default {
               itemFooterP:
                 "Những gì mà người bên cạnh bạn đang nghe. Ảnh bìa: Wren Evans",
               itemContentImg: "/31part4.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg:
@@ -1573,8 +1585,7 @@ export default {
               itemFooterP:
                 "Đông tới Tây, đây là những ca khúc thịnh hành nhất ở Việt Nam. Ảnh bìa: Wren Evans",
               itemContentImg: "/32tryenma.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/31part4.jpeg",
@@ -1684,8 +1695,7 @@ export default {
               itemFooterH4: "Viral Hits",
               itemFooterP: "Viral, trending and taking off.",
               itemContentImg: "/33dec15.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/51songtosing.jpeg",
@@ -1796,8 +1806,7 @@ export default {
               itemFooterP:
                 "The hottest songs you need to listen to right now. Cover: Reneé Rapp, Megan Thee Stallion",
               itemContentImg: "/34hosovuan.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/61caphequanquen.jpeg",
@@ -1908,8 +1917,7 @@ export default {
               itemFooterP:
                 "All your favorite Disney hits, including songs from Wish.",
               itemContentImg: "/35oc29.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/62deep.jpeg",
@@ -2034,8 +2042,7 @@ export default {
               itemFooterP:
                 "The most interesting tracks in the current world of pop music.",
               itemContentImg: "/41pop.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/52binhmoiruouxua.jpeg",
@@ -2147,8 +2154,7 @@ export default {
               itemFooterH4: "Pop Rising",
               itemFooterP: "Who's now and next in pop. Cover: FLETCHER",
               itemContentImg: "/42poprising.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/93topnhacviet2020.jpeg",
@@ -2259,8 +2265,7 @@ export default {
               itemFooterP:
                 "Hottest Anime tracks & best new sounds for all Anime fans! 最新アニメシーンの話題曲をまとめてお届け！Illustration by kazuhisa Uragami",
               itemContentImg: "/43animenow.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/95cogainaylacuaai.jpeg",
@@ -2371,8 +2376,7 @@ export default {
               itemFooterP:
                 "Những chiếc nhạc mới trong tuần, được tuyển chọn cẩn thận. Ảnh bìa: Madihu",
               itemContentImg: "/44newmusic.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/92chaudangkhoa.jpeg",
@@ -2493,8 +2497,7 @@ export default {
               itemFooterP:
                 "The top 150 tracks from Fresh Finds R&B in 2023. Cover: JayO. Updates every Wednesday.",
               itemContentImg: "/45fresh.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/104indam.jpeg",
@@ -2609,8 +2612,7 @@ export default {
               itemFooterH4: "Songs to Sing in the Shower",
               itemFooterP: "Splash and sing-along.",
               itemContentImg: "/51songtosing.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/54dejavu.jpeg",
@@ -2731,8 +2733,7 @@ export default {
               itemFooterP:
                 "Những bản nhạc quen thuộc qua sự thể hiện mới. Ảnh bìa: Duy Mạnh, Cầm",
               itemContentImg: "/52binhmoiruouxua.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/51songtosing.jpeg",
@@ -2843,8 +2844,7 @@ export default {
               itemFooterP:
                 "Get those vocal chords working with these Indie favourites.",
               itemContentImg: "/53sing-along.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/95cogainaylacuaai.jpeg",
@@ -2954,8 +2954,7 @@ export default {
               itemFooterH4: "Déjà vu",
               itemFooterP: "100 liedjes voor al die mooie herinneringen.",
               itemContentImg: "/54dejavu.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/93topnhacviet2020.jpeg",
@@ -3065,8 +3064,7 @@ export default {
               itemFooterH4: "Classic Oldies",
               itemFooterP: "Classic hits from the 50s and 60s.",
               itemContentImg: "/55classic.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/iconspotify copy.jpeg",
@@ -3191,8 +3189,7 @@ export default {
               itemFooterH4: "Cà Phê Quán Quen",
               itemFooterP: "Quán quen, nhạc cũ, cảm giác lạ.",
               itemContentImg: "/61caphequanquen.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam6.jpeg",
@@ -3304,8 +3301,7 @@ export default {
               itemFooterP:
                 "Keep calm and focus with ambient and post-rock music.",
               itemContentImg: "/62deep.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -3416,8 +3412,7 @@ export default {
               itemFooterP:
                 "heartbreak feels good in a place like this Cover: Taylor Swift",
               itemContentImg: "/63sad.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -3527,8 +3522,7 @@ export default {
               itemFooterH4: "Chill Hits",
               itemFooterP: "Kick back to the best new and recent chill hits.",
               itemContentImg: "/64chill.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -3638,8 +3632,7 @@ export default {
               itemFooterH4: "Happy Beats",
               itemFooterP: "Feel-good dance music!",
               itemContentImg: "/65happy.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -3755,8 +3748,7 @@ export default {
               itemFooterP:
                 "Your weekly update of the most played tracks right now - Global.",
               itemContentImg: "/71globle.jpg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/42poprising.jpeg",
@@ -3878,8 +3870,7 @@ export default {
               itemFooterP:
                 "Your weekly update of the most played tracks right now - Vietnam.",
               itemContentImg: "/72vietnam.jpg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -4000,8 +3991,7 @@ export default {
               itemFooterP:
                 "Your daily update of the most played tracks right now - Global.",
               itemContentImg: "/73topspnggloble.jpg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -4112,8 +4102,7 @@ export default {
               itemFooterP:
                 "Your daily update of the most played tracks right now - Vietnam.",
               itemContentImg: "/74top50vienam.jpg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -4224,8 +4213,7 @@ export default {
               itemFooterP:
                 "Your daily update of the most viral tracks right now - Global.",
               itemContentImg: "/75virulgloble.jpg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -4351,8 +4339,7 @@ export default {
               itemFooterP:
                 "Những gì mà người bên cạnh bạn đang nghe. Ảnh bìa: Wren Evans",
               itemContentImg: "/81hiphopviet.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam7.jpeg",
@@ -4464,8 +4451,7 @@ export default {
               itemFooterP:
                 "Đông tới Tây, đây là những ca khúc thịnh hành nhất ở Việt Nam. Ảnh bìa: Wren Evans",
               itemContentImg: "/82lofi.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -4575,8 +4561,7 @@ export default {
               itemFooterH4: "Viral Hits",
               itemFooterP: "Viral, trending and taking off.",
               itemContentImg: "/83indam.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -4697,8 +4682,7 @@ export default {
               itemFooterP:
                 "The hottest songs you need to listen to right now. Cover: Reneé Rapp, Megan Thee Stallion",
               itemContentImg: "/84remix.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -4809,8 +4793,7 @@ export default {
               itemFooterP:
                 "All your favorite Disney hits, including songs from Wish.",
               itemContentImg: "/85vpop.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -4925,8 +4908,7 @@ export default {
               itemFooterH4: "Vũ Cát Tường",
               itemFooterP: "Artist",
               itemContentImg: "/91vucattuong.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/35oc29.jpeg",
@@ -5037,8 +5019,7 @@ export default {
               itemFooterH4: "Châu Đăng Khoa",
               itemFooterP: "Artist",
               itemContentImg: "/92chaudangkhoa.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -5159,8 +5140,7 @@ export default {
               itemFooterP:
                 "Những nghệ sĩ Việt được nghe nhiều nhất năm 2020. Ảnh bìa: Sơn Tùng M-TP",
               itemContentImg: "/93topnhacviet2020.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -5270,8 +5250,7 @@ export default {
               itemFooterH4: "dreAMEE (acoustic)",
               itemFooterP: "AMEE",
               itemContentImg: "/94dreamee.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -5381,8 +5360,7 @@ export default {
               itemFooterH4: "Cô Gái Này Là Của Ai? (feat.Rush & Nhi Nhi)",
               itemFooterP: "Krix",
               itemContentImg: "/95cogainaylacuaai.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -5507,8 +5485,7 @@ export default {
               itemFooterH4: "Liu Grace",
               itemFooterP: "Artist",
               itemContentImg: "/101liu.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam6.jpeg",
@@ -5619,8 +5596,7 @@ export default {
               itemFooterH4: "Hydra",
               itemFooterP: "Artist",
               itemContentImg: "/102hyfra.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -5730,8 +5706,7 @@ export default {
               itemFooterH4: "Chiennhatlang",
               itemFooterP: "Artist",
               itemContentImg: "/103chiennhatlang.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -5852,8 +5827,7 @@ export default {
               itemFooterP:
                 "Dàn lineup xịn xò đậm chất indie tại Những Thành Phố Mơ Màng diễn ra vào ngày 23/12/2023 tại Công viên Yên Sở, Hà Nội",
               itemContentImg: "/94dreamee.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -5963,8 +5937,7 @@ export default {
               itemFooterH4: "Bí Mật Nhỏ",
               itemFooterP: "B Ray",
               itemContentImg: "/95cogainaylacuaai.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -6079,8 +6052,7 @@ export default {
               itemFooterH4: "Ha Chu Works",
               itemFooterP: "Ha Chu",
               itemContentImg: "/111hw.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/itemContentImg/hothitvietnam/hothitvietnam8.jpeg",
@@ -6201,8 +6173,7 @@ export default {
               itemFooterH4: "Không Gia Đình",
               itemFooterP: "Nguyễn Quang Minh",
               itemContentImg: "/112khonggiadinh.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -6322,8 +6293,7 @@ export default {
               itemFooterH4: "Hành trình tâm linh",
               itemFooterP: "Hành trình tâm linh",
               itemContentImg: "/113hanhtrinhtamlinh.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -6443,8 +6413,7 @@ export default {
               itemFooterH4: "Truyện Dài - Truyện Ngắn",
               itemFooterP: "Lộc Lá",
               itemContentImg: "/114truyenngan.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -6554,8 +6523,7 @@ export default {
               itemFooterH4: "Sức Khỏe Thân - Tâm -Trí",
               itemFooterP: "Fonos",
               itemContentImg: "/115suckhoe.jpeg",
-              firstMusic:
-                "/music/CoHenVoiThanhXuan-SuniHaLinhHoangDungGREYDDoanTheLanOrangeTlinh-7613769.mp3",
+              runBtnPlay: false,
               listRow: [
                 {
                   titleImg: "/41pop.jpeg",
@@ -6686,6 +6654,147 @@ export default {
     // click buttonPlay thì item đó sẽ phat list nhạc của item đó
     clickPlayList: function (itemPlay) {
       this.containerFooter = itemPlay;
+      console.log("containerFooter:", this.containerFooter);
+      itemPlay.run = !itemPlay.run;
+      console.log("runBtn:", itemPlay.run);
+    },
+    // //////
+    enterPlay: function () {
+      if (this.tagAudio === null) {
+        // * khởi tạo thẻ Audio(link_mp3)
+        this.tagAudio = new Audio(
+          this.containerFooter.listRow[this.index].music
+        );
+
+        console.log("index:", this.index);
+        console.log(
+          "audio play:",
+          this.tagAudio.src.replace("http://localhost:5173", "")
+        );
+        // nếu mới đầu nếu tagAudio null -> khởi tạo thẻ Audio chứa link bài hát ở vị trí index=0
+        // sau đó  run: False-> True ->phat bài hat
+        console.log("run", this.run);
+        // *.play()->phat bài hát
+        this.tagAudio.play();
+        this.containerFooter.run = !this.containerFooter.run;
+        console.log("run", this.containerFooter.run);
+
+        // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
+        this.tagAudio.ontimeupdate = () => {
+          // arrow function thay vì ghi /this.tagAudio.ontimeupdate = function() {}/
+          // vì arrFun ko có this của nó, còn Func nào cũng sẽ có this đại diện cho func đó
+
+          this.timePlay = this.tagAudio.currentTime / 60;
+          this.totleTime = this.tagAudio.duration / 60;
+          // lấy thời gian chạy hiện tại chia cho tổng thời gian bài hát *100 = % dung lg bài hát chạy hiên tại
+          // để gán vào thuộc tính value của thanh bar có tổng 100%
+          this.value =
+            (this.tagAudio.currentTime / this.tagAudio.duration) * 100;
+
+          // * tự động chuyển bài khi phát hết
+          if (this.timePlay === this.totleTime) {
+            this.index = this.index + 1;
+            console.log(
+              "index+1:",
+              this.index,
+              ";",
+              this.containerFooter.listRow[this.index].music
+            );
+
+            this.tagAudio = new Audio(
+              this.containerFooter.listRow[this.index].music
+            );
+            this.tagAudio.play();
+            // phải bắt lại vị trí hiện tại của bài hát mới
+            this.tagAudio.ontimeupdate = () => {
+              this.timePlay = this.tagAudio.currentTime / 60;
+              console.log("timePlay:", this.timePlay);
+              this.totleTime = this.tagAudio.duration / 60;
+              console.log("totleTime:", this.totleTime);
+              this.value =
+                (this.tagAudio.currentTime / this.tagAudio.duration) * 100;
+            };
+          }
+        };
+      } else {
+        if (
+          // căt di kí tự trong"" và thay băng ""-> mục dich lay link bai hat ra riêng de so sánh
+          this.tagAudio.src.replace("http://localhost:5173", "") !=
+          this.containerFooter.listRow[this.index].music
+        ) {
+          this.tagAudio = new Audio(
+            this.containerFooter.listRow[this.index].music
+          );
+
+          this.tagAudio.play();
+
+          this.containerFooter.run = !this.containerFooter.run;
+          console.log("run", this.containerFooter.run);
+        } else {
+          this.tagAudio.play();
+          this.totleTime = this.tagAudio.currentTime;
+          console.log("totleTime:", this.totleTime, "/");
+          this.containerFooter.run = !this.containerFooter.run;
+          console.log("run s", this.containerFooter.run);
+        }
+      }
+      this.tagAudio.volume = 1.0;
+      this.valueVolume = this.tagAudio.volume * 100;
+      console.log("volume:", (this.tagAudio.volume = 1.0));
+    },
+    enterPause: function () {
+      // dừng bài hat
+      this.tagAudio.pause();
+      this.containerFooter.run = !this.containerFooter.run;
+      console.log("run s", this.containerFooter.run);
+    },
+    nextSong: function () {
+      this.index = this.index + 1;
+      console.log(
+        "index+1:",
+        this.index,
+        ";",
+        this.containerFooter.listRow[this.index].music
+      );
+      this.tagAudio.pause();
+
+      this.tagAudio = new Audio(this.containerFooter.listRow[this.index].music);
+      this.tagAudio.play();
+    },
+    backSong: function () {
+      this.index = this.index - 1;
+      console.log(
+        "index-1:",
+        this.index,
+        ";",
+        this.containerFooter.listRow[this.index].music
+      );
+      this.tagAudio.pause();
+      this.tagAudio = new Audio(this.containerFooter.listRow[this.index].music);
+      this.tagAudio.play();
+    },
+    playLoop: function () {
+      if (this.statusLoop === false) {
+        // tự động lặp lại
+        console.log("statusloop1:", this.statusLoop);
+
+        this.tagAudio.loop = true;
+        console.log("loop:", this.tagAudio.loop);
+
+        this.statusLoop = !this.statusLoop;
+        console.log("statusloop2:", this.statusLoop);
+      } else {
+        console.log("statusloop3:", this.statusLoop);
+
+        this.tagAudio.loop = false;
+        console.log("loop:", this.tagAudio.loop);
+
+        this.statusLoop = !this.statusLoop;
+        console.log("statusloop4:", this.statusLoop);
+      }
+    },
+    playSpeed: function () {
+      this.tagAudio.playbackRate = 8;
     },
   },
 };
