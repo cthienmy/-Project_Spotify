@@ -47,7 +47,7 @@
           <ion-icon name="play-circle-outline"></ion-icon>
         </button>
         <!-- * button pause -->
-        <button v-else class="footer-middelTop3" v-on:click="enterPause()">
+        <button v-else class="footer-middelTop3" v-on:click="enterPlay()">
           <ion-icon name="pause-circle-outline"></ion-icon>
         </button>
         <!-- * next Song -->
@@ -58,13 +58,19 @@
       <!-- * thanh bar % -->
       <div class="footer-middelBottom">
         <div class="footer-middelBottomTime">
-          {{ timePlay }}
+          {{ containerFooterVariable.timePlay }}
         </div>
         <div class="footer-middelBottomPlay">
-          <input class="rangebar" type="range" v-bind:value="value" />
+          <input
+            class="rangebar"
+            type="range"
+            v-bind:value="containerFooterVariable.value"
+          />
           <!--  -->
         </div>
-        <div class="footer-middelBottomTime">{{ totleTime }}</div>
+        <div class="footer-middelBottomTime">
+          {{ containerFooterVariable.totleTime }}
+        </div>
       </div>
     </div>
     <!--footer-right -->
@@ -96,12 +102,12 @@ export default {
   name: "footerPlay",
   props: {
     containerFooter: Object,
-    enterPlay: Function,
-    enterPause: Function,
+    // enterPlay: Function,
     nextSong: Function,
     backSong: Function,
     playLoop: Function,
     playSpeed: Function,
+    containerFooterVariable: Object,
   },
   data() {
     return {
@@ -115,6 +121,11 @@ export default {
     };
   },
   methods: {
+    enterPlay: function () {
+      this.$emit("clickButtonPlay", this.containerFooter);
+      console.log("containerFooter.run:", this.containerFooter.run);
+      // console.log(" containerFooter:", this.containerFooter);
+    },
     // enterPlay: function () {
     //   if (this.tagAudio === null) {
     //     // * khởi tạo thẻ Audio(link_mp3)

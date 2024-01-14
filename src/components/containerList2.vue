@@ -9,7 +9,7 @@
         v-for="(item2, index) in list2.itemContent"
         v-bind:key="index"
         v-on:clickItem="contentIn(item2)"
-        v-on:clickButtonPlay="clikPlayList(item2)"
+        v-on:clickButtonPlay="enterPlay(item2)"
       />
     </ul>
   </div>
@@ -32,7 +32,7 @@ export default {
     contentIn: function (itemContentIn) {
       this.$emit("clickItem", itemContentIn);
     },
-    clikPlayList: function (itemPlay) {
+    enterPlay: function (itemPlay) {
       this.$emit("clickButtonPlay", itemPlay);
     },
   },

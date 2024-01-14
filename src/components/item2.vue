@@ -10,8 +10,8 @@
         </div>
       </li>
     </a>
-    <buttonPlay v-on:click="clickPlayList()" v-if="item2.run === false" />
-    <buttonPause v-on:click="clickPlayList()" v-else />
+    <buttonPlay v-on:click="enterPlay()" v-if="item2.run === false" />
+    <buttonPause v-on:click="enterPlay()" v-else />
   </div>
 </template>
 
@@ -31,8 +31,9 @@ export default {
     contentIn: function () {
       this.$emit("clickItem");
     },
-    clickPlayList: function () {
+    enterPlay: function () {
       this.$emit("clickButtonPlay");
+      console.log("item2.run", this.item2.run);
     },
   },
 };
