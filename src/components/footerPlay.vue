@@ -88,7 +88,7 @@
         <ion-icon name="volume-high-outline"></ion-icon>
       </div>
       <!-- * volume bar -->
-      <input class="footer-right3" type="range" v-bind:value="valueVolume" />
+      <input class="footer-right3" type="range" v-bind:value="containerFooterVariable.valueVolume" />
       <!--  -->
       <button class="footer-right2">
         <ion-icon name="desktop-outline"></ion-icon>
@@ -111,20 +111,14 @@ export default {
   },
   data() {
     return {
-      // tagAudio: null,
-      // index: 0,
-      // timePlay: "00:00",
-      // totleTime: "",
-      // value: "0",
-      // statusLoop: false,
-      // valueVolume: "100",
+      
     };
   },
   methods: {
     enterPlay: function () {
       this.$emit("clickButtonPlay", this.containerFooter);
       console.log("containerFooter.run:", this.containerFooter.run);
-      // console.log(" containerFooter:", this.containerFooter);
+     
     },
     // enterPlay: function () {
     //   if (this.tagAudio === null) {
