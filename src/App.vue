@@ -222,7 +222,54 @@ export default {
     goHome: function () {
       this.itemClick = null;
     },
+    setTime: function(){
+         // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
+         this.containerFooterVariable.tagAudio.ontimeupdate =  () => {
+            // arrow function thay vì ghi /this.tagAudio.ontimeupdate = function() {}/
+            // vì arrFun ko có this của nó, còn Func nào cũng sẽ có this đại diện cho func đó
+                     
+            this.containerFooterVariable.timePlay = Math.floor(this.containerFooterVariable.tagAudio.currentTime );
+              
+            this.containerFooterVariable.totleTime =  Math.floor(this.containerFooterVariable.tagAudio.duration);
+              
+            // lấy thời gian chạy hiện tại chia cho tổng thời gian bài hát *100 = % dung lg bài hát chạy hiên tại
+            // để gán vào thuộc tính value của thanh bar có tổng 100%
+            this.containerFooterVariable.value = Math.floor((this.containerFooterVariable.tagAudio.currentTime /
+                this.containerFooterVariable.tagAudio.duration) *100)
+              
 
+            // * tự động chuyển bài khi phát hết
+            if (
+              this.containerFooterVariable.timePlay ===
+              this.containerFooterVariable.totleTime
+            ) {
+              this.containerFooterVariable.index = this.containerFooterVariable.index +1;
+              console.log("index+1:",this.containerFooterVariable.index);
+              
+              this.containerFooterVariable.tagAudio = new Audio(
+                this.containerFooter.listRow[
+                  this.containerFooterVariable.index].music
+              );
+              console.log('tagAudio + 1:',this.containerFooter.listRow[this.containerFooterVariable.index].music);
+
+              this.containerFooterVariable.tagAudio.play();
+              // phải bắt lại vị trí hiện tại của bài hát mới
+              this.containerFooterVariable.tagAudio.ontimeupdate = () => {
+               
+                this.containerFooterVariable.timePlay =
+                  this.containerFooterVariable.tagAudio.currentTime / 60;
+                
+                this.containerFooterVariable.totleTime =
+                  this.containerFooterVariable.tagAudio.duration / 60;
+                
+                this.containerFooterVariable.value =
+                  (this.containerFooterVariable.tagAudio.currentTime /
+                    this.containerFooterVariable.tagAudio.duration) *
+                  100;
+              };
+            }
+          };
+    },
     enterPlay: function (itemPlay) {
       // * click buttonPlay thì item đó sẽ phat list nhạc của item đó
       this.containerFooter = itemPlay;
@@ -230,8 +277,8 @@ export default {
 
       // 1** Neu run === false : đang Pause
       if (this.containerFooter.run === false) {
-        console.log("run1:", this.containerFooter.run);
-        // run = false      
+        this.containerFooter.run = !this.containerFooter.run;
+        // run: False-> True 
         // 1.1--thùng chứa ban đầu chưa có gì & run=== false(Pause)
         if (this.containerFooterVariable.tagAudio === null) {
           // * khởi tạo thẻ Audio(link_mp3)
@@ -241,76 +288,22 @@ export default {
             ].music
           );
 
-
-
-          console.log("index::::", this.containerFooterVariable.index);
-
           // nếu mới đầu nếu tagAudio null -> khởi tạo thẻ Audio chứa link bài hát ở vị trí index=0    
           // *.play()->phat bài hát
-           // sau đó  run: False-> True 
           this.containerFooterVariable.tagAudio.play();
-          this.containerFooter.run = !this.containerFooter.run;
-          console.log("run 1 s:", this.containerFooter.run);
-          // run= true
 
           // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
-          this.containerFooterVariable.tagAudio.ontimeupdate =  () => {
-            // arrow function thay vì ghi /this.tagAudio.ontimeupdate = function() {}/
-            // vì arrFun ko có this của nó, còn Func nào cũng sẽ có this đại diện cho func đó
-
-            this.containerFooterVariable.timePlay =
-              this.containerFooterVariable.tagAudio.currentTime / 60;
-            this.containerFooterVariable.totleTime =
-              this.containerFooterVariable.tagAudio.duration / 60;
-            // lấy thời gian chạy hiện tại chia cho tổng thời gian bài hát *100 = % dung lg bài hát chạy hiên tại
-            // để gán vào thuộc tính value của thanh bar có tổng 100%
-            this.containerFooterVariable.value =
-              (this.containerFooterVariable.tagAudio.currentTime /
-                this.containerFooterVariable.tagAudio.duration) *
-              100;
-
-            // * tự động chuyển bài khi phát hết
-            if (
-              this.containerFooterVariable.timePlay ===
-              this.containerFooterVariable.totleTime
-            ) {
-              this.containerFooterVariable.index =
-                this.containerFooterVariable.index + 1;
-              console.log(
-                "index+1:",
-                this.containerFooterVariable.index,
-                ";",
-                this.containerFooter.listRow[this.icontainerFooterVariable.ndex]
-                  .music
-              );
-
-              this.tagAudio = new Audio(
-                this.containerFooter.listRow[
-                  this.containerFooterVariable.index
-                ].music
-              );
-              this.containerFooterVariable.tagAudio.play();
-              // phải bắt lại vị trí hiện tại của bài hát mới
-              this.containerFooterVariable.tagAudio.ontimeupdate = () => {
-                this.containerFooterVariable.timePlay =
-                  this.containerFooterVariable.tagAudio.currentTime / 60;
-                console.log("timePlay:", this.containerFooterVariable.timePlay);
-                this.containerFooterVariable.totleTime =
-                  this.containerFooterVariable.tagAudio.duration / 60;
-                console.log(
-                  "totleTime:",
-                  this.containerFooterVariable.totleTime
-                );
-                this.containerFooterVariable.value =
-                  (this.containerFooterVariable.tagAudio.currentTime /
-                    this.containerFooterVariable.tagAudio.duration) *
-                  100;
-              };
-            }
-          };
+          this.containerFooterVariable.tagAudio.ontimeupdate =  this.setTime;
+          // * tự động chuyển bài khi phát hết
+            
         }
         // 1.2--thùng chứa ban đầu đã có & run=== false(Pause)
         else {
+          // nếu có bài hat đang phát thì dừng
+          this.containerFooterVariable.tagAudio.pause();   
+          this.containerFooter.run = !this.containerFooter.run;
+          // run: False-> True 
+          
           // 1.2.1---thùng chứa ban đầu đã có & run=== false(Pause) & chứa Bài Hát Khac
           if (
             // căt di kí tự trong"" và thay băng ""-> mục dich lay link bai hat ra riêng de so sánh
@@ -321,11 +314,7 @@ export default {
             this.containerFooter.listRow[this.containerFooterVariable.index]
               .music
           ) {
-            console.log("1:",this.containerFooterVariable.tagAudio.src)
-            console.log("2:",this.containerFooterVariable.tagAudio.src.replace(
-              "http://localhost:5174",""
-              
-            ))
+            
             // khoi taoj lai tu dau va phat nhac
             this.containerFooterVariable.tagAudio = new Audio(
               this.containerFooter.listRow[
@@ -335,24 +324,17 @@ export default {
 
             this.containerFooterVariable.tagAudio.play();
 
-            itemPlay.run = !itemPlay.run;
-            console.log("run1s:", itemPlay.run);
-            // run== true
+            
+            // phải bắt lại vị trí hiện tại của bài hát mới
+            // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
+            this.containerFooterVariable.tagAudio.ontimeupdate =  this.setTime;
+            
           }
           // 1.2.2---thùng chứa ban đầu đã có & run=== false(Pause) & chứa cùng 1 bài hát
           else {
             this.containerFooterVariable.tagAudio.play();
-            // tinh theo phut
-            // this.containerFooterVariable.timePlay =
-            //   this.containerFooterVariable.tagAudio.currentTime / 60;
-            // console.log(
-            //   "currentTime /60:",
-            //   this.containerFooterVariable.tagAudio.currentTime /60,
-            //   "/"
-            // );
-            itemPlay.run = !itemPlay.run;
-            console.log("run s", itemPlay.run);
-            // run =true
+            this.containerFooter.run = !this.containerFooter.run;
+            
           }
         }
       }
@@ -363,8 +345,9 @@ export default {
         // neu itemPlay.run===true -> dừng bài hat
         this.containerFooterVariable.tagAudio.pause();
         this.containerFooter.run = !this.containerFooter.run;
-        console.log("run22:", this.containerFooter.run);
-        // console.log("run s", itemPlay.run);
+        
+       
+        
       }
 
       // * điều chỉnh volume
