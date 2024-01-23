@@ -10,8 +10,8 @@
         </div>
       </li>
     </a>
-    <buttonPlay v-on:click="enterPlay()" v-if="item2.run === false" />
-    <buttonPause v-on:click="enterPlay()" v-else />
+    <buttonPlay v-on:click="enterPlay()" v-if="item2.run === false" class="item-button" />
+    <buttonPause v-on:click="enterPlay()" v-else class="item-button" />
   </div>
 </template>
 
@@ -43,10 +43,12 @@ export default {
 .container-item:hover {
   position: relative;
 }
+
 .container-item:hover .button-play {
   visibility: visible;
   /* hien thi khi di chuot vao phan tu item thi nut play se visible(co the thay dc) */
 }
+
 .item {
   background-color: rgb(32, 32, 32);
   padding: 15px;
@@ -64,8 +66,9 @@ export default {
   height: 150px;
   border-radius: 5px;
 }
-.item-footer {
-}
+
+
+
 .item-footer h4 {
   margin: 9px 0 4px;
   color: rgb(255, 255, 255);
@@ -73,6 +76,7 @@ export default {
   overflow: hidden;
   white-space: nowrap;
 }
+
 .item-footer p {
   margin: 0;
   font-size: 13px;
@@ -82,5 +86,12 @@ export default {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.item-button {
+  visibility: hidden;
+  position: absolute;
+  right: 13px;
+  top: 112px;
 }
 </style>

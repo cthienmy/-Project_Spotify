@@ -27,9 +27,9 @@ export default {
   justify-content: center;
   border-radius: 50%;
   background-color: rgb(30, 215, 96);
-  visibility: hidden;
+  /* visibility: hidden;
   position: absolute;
   right: 13px;
-  top: 112px;
+  top: 112px; */
 }
 </style>

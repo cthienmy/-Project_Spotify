@@ -4,18 +4,18 @@
       <div class="containerFixed">
         <!-- Home -->
         <div class="home">
-          <a href="#" v-on:click="goHome"
-            ><div class="home1">
+          <a href="#" v-on:click="goHome">
+            <div class="home1">
               <div class="home-icon"><i class="el-icon-s-home"></i></div>
               <p>Home</p>
-            </div></a
-          >
-          <a href="#"
-            ><div class="home2">
+            </div>
+          </a>
+          <a href="#">
+            <div class="home2">
               <div class="home-icon"><i class="el-icon-search"></i></div>
               <p>Search</p>
-            </div></a
-          >
+            </div>
+          </a>
         </div>
         <!-- your library -->
         <div class="library">
@@ -59,41 +59,32 @@
           <tabBar v-on:clickGo="clickGo" />
           <!-- list1 -->
 
-          <containerList2
-            v-bind:list2="list1"
-            v-bind:itemClick="itemClick"
-            v-on:clickItem="contentIn($event)"
-            v-on:clickButtonPlay="enterPlay($event)"
-          />
+          <containerList2 v-bind:list2="list1" v-bind:itemClick="itemClick" v-on:clickItem="contentIn($event)"
+            v-on:clickButtonPlay="enterPlay($event)" />
 
           <!-- list2 -->
-          <containerList2
-            v-bind:list2="list2"
-            v-for="(list2, index) in list2"
-            v-bind:key="index"
-            v-on:clickItem="contentIn($event)"
-            v-on:clickButtonPlay="enterPlay($event)"
-          />
+          <containerList2 v-bind:list2="list2" v-for="(list2, index) in list2" v-bind:key="index"
+            v-on:clickItem="contentIn($event)" v-on:clickButtonPlay="enterPlay($event)" />
         </div>
         <!-- noi dung thay the list-->
-        <itemContent
-          v-else
-          v-on:clickBack="clickBack"
-          v-on:clickGo="clickGo"
-          v-bind:album="albumClick"
-        />
+        <itemContent v-else v-on:clickBack="clickBack" v-on:clickGo="clickGo" v-bind:album="containerFooter"
+          v-bind:enterPlay="enterPlay" />
         <!-- listfooter -->
         <div class="container-item-footer">
           <div class="container-item-footer-top">
             <div class="container-item-footer-top1">
               <ul>
-                <li><h4>Company</h4></li>
+                <li>
+                  <h4>Company</h4>
+                </li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Jobs</a></li>
                 <li><a href="#">For the Record</a></li>
               </ul>
               <ul>
-                <li><h4>Communities</h4></li>
+                <li>
+                  <h4>Communities</h4>
+                </li>
                 <li><a href="#">For Artists</a></li>
                 <li><a href="#">Developers</a></li>
                 <li><a href="#">Advertising</a></li>
@@ -101,7 +92,9 @@
                 <li><a href="#">Vendors</a></li>
               </ul>
               <ul>
-                <li><h4>Useful links</h4></li>
+                <li>
+                  <h4>Useful links</h4>
+                </li>
                 <li><a href="#">Support</a></li>
                 <li><a href="#">Free Mobile App</a></li>
               </ul>
@@ -109,15 +102,15 @@
 
             <!-- icon -->
             <div class="container-item-footer-top2">
-              <a href="#"
-                ><div><ion-icon name="logo-instagram"></ion-icon></div
-              ></a>
-              <a href="#"
-                ><div><ion-icon name="logo-twitter"></ion-icon></div
-              ></a>
-              <a href="#"
-                ><div><ion-icon name="logo-facebook"></ion-icon></div
-              ></a>
+              <a href="#">
+                <div><ion-icon name="logo-instagram"></ion-icon></div>
+              </a>
+              <a href="#">
+                <div><ion-icon name="logo-twitter"></ion-icon></div>
+              </a>
+              <a href="#">
+                <div><ion-icon name="logo-facebook"></ion-icon></div>
+              </a>
             </div>
           </div>
 
@@ -142,17 +135,10 @@
       </div>
     </div>
     <!-- footer -->
-    <footerPlay
-      v-bind:containerFooter="containerFooter"
-      v-bind:enterPlay="enterPlay"
-      v-bind:enterPause="enterPause"
-      v-bind:nextSong="nextSong"
-      v-bind:backSong="backSong"
-      v-bind:playLoop="playLoop"
-      v-bind:playSpeed="playSpeed"
-      v-bind:containerFooterVariable="containerFooterVariable"
-      v-on:clickButtonPlay="enterPlay($event)"
-    />
+    <footerPlay v-bind:containerFooter="containerFooter" v-bind:nextSong="nextSong" v-bind:backSong="backSong"
+      v-bind:enterPlay="enterPlay" v-bind:playLoop="playLoop" v-bind:playSpeed="playSpeed"
+      v-bind:containerFooterVariable="containerFooterVariable" v-bind:changeSong="changeSong"
+      v-bind:changeVolume="changeVolume" />
   </div>
 </template>
 <script>
@@ -160,7 +146,7 @@ import containerList2 from "./components/containerList2.vue";
 import itemContent from "./components/itemContent.vue";
 import tabBar from "./components/tabBar.vue";
 import footerPlay from "./components/footerPlay.vue";
-import {list2,listRow} from './data'
+import { list2, listRow } from './data'
 
 export default {
   name: "app",
@@ -179,13 +165,16 @@ export default {
       containerFooterVariable: {
         tagAudio: null,
         index: 0,
-        timePlay: "00:00",
-        totleTime: "00:00",
+        timePlay1: "00",
+        timePlay2: "00",
+        timePlay: "",
+        totleTime1: "00",
+        totleTime2: "00",
+        totleTime: "",
         value: "0",
         statusLoop: false,
-        valueVolume: "100",
+        valueVolume: 100,
       },
-
       //
       containerFooter: {
         img: "/item2thienhanghegi.jpeg",
@@ -211,7 +200,9 @@ export default {
       this.list1.itemContent.unshift(itemIn);
       this.list1.titleList = "Recently played";
       // thêm album chứa những list nhạc vừa nghe
-      this.albumClick = itemIn;
+      // this.albumClick = itemIn;
+      this.containerFooter = itemIn;
+      console.log("album:", this.containerFooter)
     },
     clickBack: function () {
       this.itemClick = null;
@@ -222,53 +213,75 @@ export default {
     goHome: function () {
       this.itemClick = null;
     },
-    setTime: function(){
-         // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
-         this.containerFooterVariable.tagAudio.ontimeupdate =  () => {
-            // arrow function thay vì ghi /this.tagAudio.ontimeupdate = function() {}/
-            // vì arrFun ko có this của nó, còn Func nào cũng sẽ có this đại diện cho func đó
-                     
-            this.containerFooterVariable.timePlay = Math.floor(this.containerFooterVariable.tagAudio.currentTime );
-              
-            this.containerFooterVariable.totleTime =  Math.floor(this.containerFooterVariable.tagAudio.duration);
-              
-            // lấy thời gian chạy hiện tại chia cho tổng thời gian bài hát *100 = % dung lg bài hát chạy hiên tại
-            // để gán vào thuộc tính value của thanh bar có tổng 100%
-            this.containerFooterVariable.value = Math.floor((this.containerFooterVariable.tagAudio.currentTime /
-                this.containerFooterVariable.tagAudio.duration) *100)
-              
+    setTime: function () {
+      // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
+      // arrow function thay vì ghi /this.tagAudio.ontimeupdate = function() {}/
+      // vì arrFun ko có this của nó, còn Func nào cũng sẽ có this đại diện cho func đó
+      // Math.floor làm tròn xuống số nguyên gần nhất 
+      this.containerFooterVariable.timePlay = Math.floor(this.containerFooterVariable.tagAudio.currentTime);
 
-            // * tự động chuyển bài khi phát hết
-            if (
-              this.containerFooterVariable.timePlay ===
-              this.containerFooterVariable.totleTime
-            ) {
-              this.containerFooterVariable.index = this.containerFooterVariable.index +1;
-              console.log("index+1:",this.containerFooterVariable.index);
-              
-              this.containerFooterVariable.tagAudio = new Audio(
-                this.containerFooter.listRow[
-                  this.containerFooterVariable.index].music
-              );
-              console.log('tagAudio + 1:',this.containerFooter.listRow[this.containerFooterVariable.index].music);
+      this.containerFooterVariable.totleTime = Math.floor(this.containerFooterVariable.tagAudio.duration);
 
-              this.containerFooterVariable.tagAudio.play();
-              // phải bắt lại vị trí hiện tại của bài hát mới
-              this.containerFooterVariable.tagAudio.ontimeupdate = () => {
-               
-                this.containerFooterVariable.timePlay =
-                  this.containerFooterVariable.tagAudio.currentTime / 60;
-                
-                this.containerFooterVariable.totleTime =
-                  this.containerFooterVariable.tagAudio.duration / 60;
-                
-                this.containerFooterVariable.value =
-                  (this.containerFooterVariable.tagAudio.currentTime /
-                    this.containerFooterVariable.tagAudio.duration) *
-                  100;
-              };
-            }
-          };
+      // lấy thời gian chạy hiện tại chia cho tổng thời gian bài hát *100 = % dung lg bài hát chạy hiên tại
+      // để gán vào thuộc tính value của thanh bar có tổng 100%
+      this.containerFooterVariable.value = Math.floor((this.containerFooterVariable.tagAudio.currentTime /
+        this.containerFooterVariable.tagAudio.duration) * 100)
+
+      //
+      // ** set time chay Song dạng 00:00
+      //   Math.floor: số giây / 60 làm tròn xuống để lấy số giờ
+      //   lấy tổng số giây / lấy dư(%) cho 60 = số giây dư sau khi lấy đc số giờ bên trên
+      if (Number(this.containerFooterVariable.timePlay1) < 10) {
+        this.containerFooterVariable.timePlay1 = "0" + Math.floor(this.containerFooterVariable.timePlay / 60);
+
+      } if (Number(this.containerFooterVariable.timePlay2) < 10) {
+        this.containerFooterVariable.timePlay2 = "0" + this.containerFooterVariable.timePlay % 60;
+
+      } if (Number(this.containerFooterVariable.totleTime1) < 10) {
+        this.containerFooterVariable.totleTime1 = "0" + Math.floor(this.containerFooterVariable.totleTime / 60);
+
+      } if (Number(this.containerFooterVariable.totleTime2) < 10) {
+        this.containerFooterVariable.totleTime2 = "0" + this.containerFooterVariable.totleTime % 60;
+
+      }
+      if (Number(this.containerFooterVariable.timePlay1) >= 10) {
+        this.containerFooterVariable.timePlay1 = "" + Math.floor(this.containerFooterVariable.timePlay / 60);
+
+      } if (Number(this.containerFooterVariable.timePlay2) >= 10) {
+        this.containerFooterVariable.timePlay2 = "" + this.containerFooterVariable.timePlay % 60;
+
+      } if (Number(this.containerFooterVariable.totleTime1) >= 10) {
+        this.containerFooterVariable.totleTime1 = "" + Math.floor(this.containerFooterVariable.totleTime / 60);
+
+      } if (Number(this.containerFooterVariable.totleTime2) >= 10) {
+        this.containerFooterVariable.totleTime2 = "" + this.containerFooterVariable.totleTime % 60;
+
+      };
+
+
+      // ** tự động chuyển bài khi phát hết
+      if (
+        this.containerFooterVariable.timePlay ===
+        this.containerFooterVariable.totleTime
+      ) {
+        this.containerFooterVariable.index = this.containerFooterVariable.index + 1;
+        this.containerFooterVariable.tagAudio = new Audio(this.containerFooter.listRow[this.containerFooterVariable.index].music);
+        this.containerFooterVariable.tagAudio.play();
+        // phải bắt lại vị trí hiện tại của bài hát mới
+        this.containerFooterVariable.tagAudio.ontimeupdate = () => {
+
+          // Math.floor làm tròn xuống số nguyên gần nhất 
+          this.containerFooterVariable.timePlay = Math.floor(this.containerFooterVariable.tagAudio.currentTime);
+
+          this.containerFooterVariable.totleTime = Math.floor(this.containerFooterVariable.tagAudio.duration);
+
+          // lấy thời gian chạy hiện tại chia cho tổng thời gian bài hát *100 = % dung lg bài hát chạy hiên tại
+          // để gán vào thuộc tính value của thanh bar có tổng 100%
+          this.containerFooterVariable.value = Math.floor((this.containerFooterVariable.tagAudio.currentTime /
+            this.containerFooterVariable.tagAudio.duration) * 100);
+        };
+      }
+
     },
     enterPlay: function (itemPlay) {
       // * click buttonPlay thì item đó sẽ phat list nhạc của item đó
@@ -293,28 +306,28 @@ export default {
           this.containerFooterVariable.tagAudio.play();
 
           // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
-          this.containerFooterVariable.tagAudio.ontimeupdate =  this.setTime;
+          this.containerFooterVariable.tagAudio.ontimeupdate = this.setTime;
           // * tự động chuyển bài khi phát hết
-            
+
         }
         // 1.2--thùng chứa ban đầu đã có & run=== false(Pause)
         else {
           // nếu có bài hat đang phát thì dừng
-          this.containerFooterVariable.tagAudio.pause();   
+          this.containerFooterVariable.tagAudio.pause();
           this.containerFooter.run = !this.containerFooter.run;
           // run: False-> True 
-          
+
           // 1.2.1---thùng chứa ban đầu đã có & run=== false(Pause) & chứa Bài Hát Khac
           if (
             // căt di kí tự trong"" và thay băng ""-> mục dich lay link bai hat ra riêng de so sánh
             this.containerFooterVariable.tagAudio.src.replace(
-              "http://localhost:5174",""
-              
+              "http://localhost:5174", ""
+
             ) !=
             this.containerFooter.listRow[this.containerFooterVariable.index]
               .music
           ) {
-            
+
             // khoi taoj lai tu dau va phat nhac
             this.containerFooterVariable.tagAudio = new Audio(
               this.containerFooter.listRow[
@@ -324,17 +337,17 @@ export default {
 
             this.containerFooterVariable.tagAudio.play();
 
-            
+
             // phải bắt lại vị trí hiện tại của bài hát mới
             // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
-            this.containerFooterVariable.tagAudio.ontimeupdate =  this.setTime;
-            
+            this.containerFooterVariable.tagAudio.ontimeupdate = this.setTime;
+
           }
           // 1.2.2---thùng chứa ban đầu đã có & run=== false(Pause) & chứa cùng 1 bài hát
           else {
             this.containerFooterVariable.tagAudio.play();
             this.containerFooter.run = !this.containerFooter.run;
-            
+
           }
         }
       }
@@ -345,30 +358,22 @@ export default {
         // neu itemPlay.run===true -> dừng bài hat
         this.containerFooterVariable.tagAudio.pause();
         this.containerFooter.run = !this.containerFooter.run;
-        
-       
-        
       }
 
-      // * điều chỉnh volume
-      this.containerFooterVariable.tagAudio.volume = 1.0;
-      this.containerFooterVariable.valueVolume =
-        this.containerFooterVariable.tagAudio.volume * 100;
-      console.log(
-        "volume:",
-        (this.containerFooterVariable.tagAudio.volume = 1.0)
-      );
+      // // * điều chỉnh volume [.volume: thuoc tinh set am luong]
+      // this.containerFooterVariable.tagAudio.volume = 1.0;
+      // this.containerFooterVariable.valueVolume =
+      //   this.containerFooterVariable.tagAudio.volume * 100;
+      // console.log(
+      //   "volume:",
+      //   (this.containerFooterVariable.tagAudio.volume = 1.0)
+      // );
     },
 
     nextSong: function () {
       this.containerFooterVariable.index =
         this.containerFooterVariable.index + 1;
-      console.log(
-        "index+1:",
-        this.containerFooterVariable.index,
-        ";",
-        this.containerFooter.listRow[this.containerFooterVariable.index].music
-      );
+
       this.containerFooterVariable.tagAudio.pause();
 
       this.containerFooterVariable.tagAudio = new Audio(
@@ -379,12 +384,6 @@ export default {
     backSong: function () {
       this.containerFooterVariable.index =
         this.containerFooterVariable.index - 1;
-      console.log(
-        "index-1:",
-        this.containerFooterVariable.index,
-        ";",
-        this.containerFooter.listRow[this.containerFooterVariable.index].music
-      );
       this.containerFooterVariable.tagAudio.pause();
       this.containerFooterVariable.tagAudio = new Audio(
         this.containerFooter.listRow[this.containerFooterVariable.index].music
@@ -394,28 +393,40 @@ export default {
     playLoop: function () {
       if (this.statusLoop === false) {
         // tự động lặp lại
-        console.log("statusloop1:", this.containerFooterVariable.statusLoop);
-
         this.containerFooterVariable.tagAudio.loop = true;
-        console.log("loop:", this.containerFooterVariable.tagAudio.loop);
-
         this.containerFooterVariable.statusLoop =
           !this.containerFooterVariable.statusLoop;
-        console.log("statusloop2:", this.containerFooterVariable.statusLoop);
       } else {
-        console.log("statusloop3:", this.containerFooterVariable.statusLoop);
-
         this.containerFooterVariable.tagAudio.loop = false;
-        console.log("loop:", this.containerFooterVariable.tagAudio.loop);
-
         this.containerFooterVariable.statusLoop =
           !this.containerFooterVariable.statusLoop;
-        console.log("statusloop4:", this.containerFooterVariable.statusLoop);
       }
     },
     playSpeed: function () {
       this.containerFooterVariable.tagAudio.playbackRate = 8;
     },
+    // tua Song sử dụng tên sự kiện "change" trong vue để bắt sự kiện sau khi ta thay đổi vị trí tua bài hát
+    // event.target.value -> trỏ tới value % của thanh bar -> sau đó chuyển % đó ngược lại số giây
+    // .currentTime
+    changeSong: function (event) {
+      console.log("onchange:", event.target.value);
+      console.log("totleTime:", this.containerFooterVariable.totleTime);
+      this.containerFooterVariable.timePlay = (event.target.value * this.containerFooterVariable.totleTime) / 100;
+      this.containerFooterVariable.tagAudio.currentTime = this.containerFooterVariable.timePlay;
+
+
+    },
+    changeVolume: function (event) {
+      // * điều chỉnh volume [.volume: thuoc tinh set am luong]
+      // target.value -> lay ra vi tri phan tram am luong roi chuyen sang thang 0.0 -1.0 am lg
+      console.log("volume1:", this.containerFooterVariable.tagAudio.volume);
+      this.containerFooterVariable.tagAudio.volume = (event.target.value * 0.1) / 10;
+      console.log("volume%:", (event.target.value * 0.1) / 10);
+
+      console.log("volume2:", this.containerFooterVariable.tagAudio.volume);
+      this.containerFooterVariable.valueVolume = this.containerFooterVariable.tagAudio.volume * 100;
+
+    }
   },
 };
 </script>
@@ -433,9 +444,11 @@ export default {
   height: 100vh;
   overflow-y: hidden;
 }
+
 .container {
   background-color: rgb(0, 0, 0);
 }
+
 .body {
   display: grid;
   grid-template-columns: 28.5% 71%;
@@ -443,10 +456,12 @@ export default {
   padding: 0.5% 0.5% 0 0.5%;
   height: 86.5vh;
 }
+
 .containerFixed {
   display: flex;
   flex-direction: column;
 }
+
 .home {
   background-color: rgb(18, 18, 18);
   margin-bottom: 8px;
@@ -456,39 +471,48 @@ export default {
   width: 100%;
   box-sizing: border-box;
 }
+
 .home a {
   color: rgb(167, 167, 167);
 }
+
 .home a:hover {
   color: rgb(255, 255, 255);
 }
+
 .home p {
   margin: 0;
   align-self: center;
   font-weight: 600;
 }
+
 .home1 {
   display: flex;
   margin-bottom: 10px;
 }
+
 .home2 {
   display: flex;
 }
+
 .home-icon {
   font-size: 25px;
   margin-right: 20px;
 }
+
 .library {
   background-color: rgb(18, 18, 18);
   border-radius: 8px;
   flex-grow: 999;
 }
+
 .library1 {
   display: flex;
   justify-content: space-between;
   color: rgb(167, 167, 167);
   padding: 15px 25px;
 }
+
 .library1-1 {
   display: flex;
 }
@@ -497,13 +521,16 @@ export default {
   font-size: 25px;
   margin-right: 20px;
 }
+
 .library1-1 p {
   margin: 0;
   align-self: center;
 }
+
 .library1-2 {
   display: flex;
 }
+
 .library-iconplus {
   font-size: 20px;
   margin-right: 10px;
@@ -517,9 +544,11 @@ export default {
   border: none;
   /* outline: none; */
 }
+
 .library-iconplus:hover {
   background-color: rgb(35, 31, 31);
 }
+
 .library-iconright {
   font-size: 20px;
   width: 33px;
@@ -531,6 +560,7 @@ export default {
   color: rgb(167, 167, 167);
   border: none;
 }
+
 .library-iconright:hover {
   background-color: rgb(35, 31, 31);
 }
@@ -539,20 +569,24 @@ export default {
   color: rgb(255, 255, 255);
   padding: 8px;
 }
+
 .library2-item {
   background-color: rgb(36, 36, 36);
   border-radius: 10px;
   padding: 18px 20px;
   margin-bottom: 25px;
 }
+
 .library2-item h4 {
   font-size: 15px;
   margin: 0;
 }
+
 .library2-item p {
   font-size: 13px;
   margin: 8px 0 20px;
 }
+
 .library2-item button {
   font-size: 13px;
   background-color: rgb(255, 255, 255);
@@ -561,14 +595,13 @@ export default {
   border-radius: 35px;
   padding-top: 5px;
 }
+
 /* /// */
 .containerList {
-  background: linear-gradient(
-    to top,
-    rgb(18, 18, 18),
-    rgb(34, 26, 29),
-    rgb(91, 56, 70)
-  );
+  background: linear-gradient(to top,
+      rgb(18, 18, 18),
+      rgb(34, 26, 29),
+      rgb(91, 56, 70));
   /* ??????????????????????????????? */
 
   border-radius: 8px;
@@ -580,6 +613,7 @@ export default {
   color: rgb(255, 255, 255);
   padding: 55px 25px 0;
 }
+
 /*  */
 .container-item-footer {
   padding: 0 25px;
@@ -592,28 +626,34 @@ export default {
   justify-content: space-between;
   padding: 40px 10px;
 }
+
 .container-item-footer-top1 {
   display: flex;
   width: 60%;
   justify-content: space-between;
 }
+
 .container-item-footer-top1 ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
   font-size: 15px;
 }
+
 .container-item-footer-top1 li {
   margin: 8px 0;
 }
+
 .container-item-footer-top1 h4 {
   color: white;
   margin: 0 0 8px;
   font-size: 16px;
 }
+
 .container-item-footer-top1 a {
   color: rgb(167, 167, 167);
 }
+
 .container-item-footer-top1 a:hover {
   color: white;
   text-decoration: underline;
@@ -624,9 +664,11 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .container-item-footer-top2 a {
   color: white;
 }
+
 .container-item-footer-top2 div {
   width: 40px;
   height: 40px;
@@ -637,6 +679,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .container-item-footer-top2 div:hover {
   background-color: rgb(78, 76, 76);
 }
@@ -648,19 +691,24 @@ export default {
   padding: 0 10px;
   padding: 30px 0 70px;
 }
+
 .container-item-footer-bot1 {
   display: flex;
 }
+
 .container-item-footer-bot1 a {
   color: rgb(167, 167, 167);
 }
+
 .container-item-footer-bot1 a:hover {
   color: white;
 }
+
 .container-item-footer-bot1 p {
   margin-right: 15px;
   font-size: 13px;
 }
+
 .container-item-footer-bot2 {
   font-size: 13px;
   color: rgb(167, 167, 167);
@@ -668,6 +716,7 @@ export default {
   align-items: center;
   padding-right: 15px;
 }
+
 .container-item-footer-bot2 div {
   background-color: aliceblue;
   width: 12px;
@@ -677,6 +726,7 @@ export default {
   border-radius: 50%;
   margin-right: 5px;
 }
+
 .container-item-footer-bot2 img {
   width: 11px;
   height: 11px;
@@ -684,5 +734,6 @@ export default {
 
   padding: 0 10px;
 }
+
 /*  */
 </style>

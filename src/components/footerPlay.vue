@@ -6,15 +6,15 @@
         <img v-bind:src="containerFooter.listRow[0].titleImg" />
       </a>
       <div class="footer-title">
-        <a href="#"
-          ><h5>{{ containerFooter.listRow[0].titleH3 }}</h5></a
-        >
-        <a href="#"
-          ><p>
+        <a href="#">
+          <h5>{{ containerFooter.listRow[0].titleH3 }}</h5>
+        </a>
+        <a href="#">
+          <p>
             {{ containerFooter.listRow[0].titleSinger1 }},
             {{ containerFooter.listRow[0].titleSinger2 }}
-          </p></a
-        >
+          </p>
+        </a>
       </div>
       <button><i class="el-icon-circle-plus-outline"></i></button>
     </div>
@@ -30,20 +30,12 @@
           <ion-icon name="shuffle-outline"></ion-icon>
         </button>
         <!-- * back Song -->
-        <button
-          class="footer-middelTop1"
-          v-on:click="backSong()"
-          v-bind:disabled="index === 0"
-        >
+        <button class="footer-middelTop1" v-on:click="backSong()" v-bind:disabled="index === 0">
           <ion-icon name="play-skip-back-outline"></ion-icon>
         </button>
         <!-- * button Play -->
         <audio id="enter-audio"></audio>
-        <button
-          v-if="containerFooter.run === false"
-          class="footer-middelTop3"
-          v-on:click="enterPlay()"
-        >
+        <button v-if="containerFooter.run === false" class="footer-middelTop3" v-on:click="enterPlay()">
           <ion-icon name="play-circle-outline"></ion-icon>
         </button>
         <!-- * button pause -->
@@ -58,21 +50,15 @@
       <!-- * thanh bar % -->
       <div class="footer-middelBottom">
         <div class="footer-middelBottomTime">
-          {{ containerFooterVariable.timePlay }}
+          {{ containerFooterVariable.timePlay1 }}:{{ containerFooterVariable.timePlay2 }}
         </div>
         <div class="footer-middelBottomPlay">
-          <input
-            class="rangebar"
-            type="range"
-            max="100"
-            min="0"
-            step="1"
-            v-bind:value="containerFooterVariable.value"
-          />
+          <input class="rangebar" type="range" max="100" min="0" step="1" v-bind:value="containerFooterVariable.value"
+            v-on:change="changeSong" />
           <!--  -->
         </div>
         <div class="footer-middelBottomTime">
-          {{ containerFooterVariable.totleTime }}
+          {{ containerFooterVariable.totleTime1 }}:{{ containerFooterVariable.totleTime2 }}
         </div>
       </div>
     </div>
@@ -91,7 +77,8 @@
         <ion-icon name="volume-high-outline"></ion-icon>
       </div>
       <!-- * volume bar -->
-      <input class="footer-right3" type="range" v-bind:value="containerFooterVariable.valueVolume" />
+      <input class="footer-right3" type="range" max="100" min="0" v-bind:value="containerFooterVariable.valueVolume"
+        v-on:change="changeVolume" />
       <!--  -->
       <button class="footer-right2">
         <ion-icon name="desktop-outline"></ion-icon>
@@ -110,19 +97,22 @@ export default {
     playLoop: Function,
     playSpeed: Function,
     containerFooterVariable: Object,
+    changeSong: Function,
+    changeVolume: Function,
+    enterPlay: Function,
+
   },
   data() {
     return {
-      
+
     };
   },
   methods: {
-    enterPlay: function () {
-      this.$emit("clickButtonPlay", this.containerFooter);
-      console.log("containerFooter.run:", this.containerFooter.run);
-     
-    },
-   
+    // enterPlay: function () {
+    //   this.$emit("clickButtonPlay", this.containerFooter);
+    // },
+
+
   },
 };
 </script>
@@ -135,6 +125,7 @@ export default {
   justify-content: space-between;
   box-sizing: border-box;
 }
+
 .footer-left {
   display: flex;
 }
@@ -146,20 +137,24 @@ export default {
   margin-right: 15px;
   align-self: center;
 }
+
 .footer-title {
   align-self: center;
   margin-right: 25px;
 }
+
 .footer-title h5 {
   font-weight: 500;
   margin: 0;
   color: rgb(250, 250, 250);
 }
+
 .footer-title p {
   font-size: 11px;
   margin: 0;
   color: rgb(179, 179, 179);
 }
+
 .footer-left button {
   padding: 0;
   align-self: center;
@@ -168,9 +163,11 @@ export default {
   background-color: rgb(0, 0, 0);
   border: none;
 }
+
 .footer-middel {
   box-sizing: border-box;
 }
+
 .footer-middelTop {
   display: flex;
   justify-content: center;
@@ -188,9 +185,11 @@ export default {
   color: rgb(179, 179, 179);
   border: none;
 }
+
 .footer-middelTop1:hover {
   color: white;
 }
+
 .footer-middelTop3:hover {
   color: white;
 }
@@ -205,20 +204,24 @@ export default {
   color: rgb(179, 179, 179);
   border: none;
 }
+
 .footer-middelBottom {
   display: flex;
   margin-top: 12px;
 }
+
 .footer-middelBottomTime {
   font-size: 12px;
   color: rgb(164, 164, 164);
   margin: 0;
   line-height: 5px;
 }
+
 .footer-middelBottomPlay {
   width: 450px;
   margin: 0 7px;
 }
+
 .rangebar {
   width: 100%;
   height: 3px;
@@ -229,6 +232,7 @@ export default {
   border-radius: 10px;
   display: flex;
 }
+
 .rangebar::-webkit-slider-thumb {
   /* tao kieu cho nut keo trong thanh truot */
   -webkit-appearance: none;
@@ -238,9 +242,11 @@ export default {
   opacity: 1;
   box-shadow: -300px 0px 0px 300px rgb(30, 215, 96);
 }
+
 .rangebar::-webkit-slider-thumb:hover {
   background: white;
 }
+
 /* eeeeeeeeeeee */
 .footer-right {
   display: flex;
@@ -255,6 +261,7 @@ export default {
   font-size: 12px;
   align-self: center;
 }
+
 .footer-right1 button {
   padding: 0;
   background-color: rgb(0, 0, 0);
@@ -266,6 +273,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .footer-right2 {
   padding: 0;
   align-self: center;
@@ -276,6 +284,7 @@ export default {
   margin: 0 7px;
   font-size: 20px;
 }
+
 .footer-right3 {
   width: 100px;
   height: 4px;
@@ -288,6 +297,7 @@ export default {
   display: flex;
   margin: 0 7px 0 0;
 }
+
 /* tao kieu cho nut keo trong thanh truot */
 .footer-right3::-webkit-slider-thumb {
   background: rgb(77, 77, 77);
