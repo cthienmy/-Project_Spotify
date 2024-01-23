@@ -98,7 +98,12 @@ export default {
     clickBack: function () {
       this.$emit("clickBack");
     },
+    enterPlay: function () {
+      this.$emit("clickButtonPlay", this.album);
+    },
+
   },
+
 };
 </script>
 

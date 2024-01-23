@@ -99,7 +99,8 @@ export default {
     containerFooterVariable: Object,
     changeSong: Function,
     changeVolume: Function,
-    enterPlay: Function,
+    // enterPlay: Function,
+
 
   },
   data() {
@@ -108,9 +109,9 @@ export default {
     };
   },
   methods: {
-    // enterPlay: function () {
-    //   this.$emit("clickButtonPlay", this.containerFooter);
-    // },
+    enterPlay: function () {
+      this.$emit("clickButtonPlay", this.containerFooter);
+    },
 
 
   },

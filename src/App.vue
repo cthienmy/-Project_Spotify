@@ -68,7 +68,7 @@
         </div>
         <!-- noi dung thay the list-->
         <itemContent v-else v-on:clickBack="clickBack" v-on:clickGo="clickGo" v-bind:album="containerFooter"
-          v-bind:enterPlay="enterPlay" />
+          v-on:clickButtonPlay="enterPlay" />
         <!-- listfooter -->
         <div class="container-item-footer">
           <div class="container-item-footer-top">
@@ -136,7 +136,7 @@
     </div>
     <!-- footer -->
     <footerPlay v-bind:containerFooter="containerFooter" v-bind:nextSong="nextSong" v-bind:backSong="backSong"
-      v-bind:enterPlay="enterPlay" v-bind:playLoop="playLoop" v-bind:playSpeed="playSpeed"
+      v-on:clickButtonPlay="enterPlay" v-bind:playLoop="playLoop" v-bind:playSpeed="playSpeed"
       v-bind:containerFooterVariable="containerFooterVariable" v-bind:changeSong="changeSong"
       v-bind:changeVolume="changeVolume" />
   </div>
@@ -202,7 +202,7 @@ export default {
       // thêm album chứa những list nhạc vừa nghe
       // this.albumClick = itemIn;
       this.containerFooter = itemIn;
-      console.log("album:", this.containerFooter)
+      console.log("album:", this.containerFooter);
     },
     clickBack: function () {
       this.itemClick = null;
