@@ -138,7 +138,7 @@
     <footerPlay v-bind:containerFooter="containerFooter" v-bind:nextSong="nextSong" v-bind:backSong="backSong"
       v-on:clickButtonPlay="enterPlay" v-bind:playLoop="playLoop" v-bind:playSpeed="playSpeed"
       v-bind:containerFooterVariable="containerFooterVariable" v-bind:changeSong="changeSong"
-      v-bind:changeVolume="changeVolume" />
+      v-bind:changeVolume="changeVolume" v-bind:stopVolume="stopVolume" v-bind:stopVl="stopVl" />
   </div>
 </template>
 <script>
@@ -161,6 +161,7 @@ export default {
       itemClick: null,
       itemGo: "",
       albumClick: null,
+      stopVl: false,
       //
       containerFooterVariable: {
         tagAudio: null,
@@ -426,7 +427,21 @@ export default {
       console.log("volume2:", this.containerFooterVariable.tagAudio.volume);
       this.containerFooterVariable.valueVolume = this.containerFooterVariable.tagAudio.volume * 100;
 
-    }
+
+    },
+    stopVolume: function () {
+      console.log("volume1:", this.containerFooterVariable.tagAudio);
+      if (this.stopVl === false) {
+        this.containerFooterVariable.tagAudio.volume = 0.0;
+        this.stopVl = !this.stopVl;
+        console.log("volume2:", this.containerFooterVariable.tagAudio.volume);
+      } else {
+        this.containerFooterVariable.tagAudio.volume = 1.0;
+        this.stopVl = !this.stopVl;
+        console.log("volume3:", this.containerFooterVariable.tagAudio.volume);
+      };
+
+    },
   },
 };
 </script>

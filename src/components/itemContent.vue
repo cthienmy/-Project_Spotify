@@ -200,17 +200,9 @@ export default {
 }
 
 .container-item-body-header1-1 {
-  /* border: none;
-  padding: 0; */
-  /* font-size: 30px; */
-  /* margin-right: 10px; */
+
   width: 55px;
   height: 55px;
-  /* display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background-color: rgb(30, 215, 96); */
 }
 
 .container-item-body-header1-2 {
@@ -273,6 +265,7 @@ export default {
   padding-bottom: 10px;
   font-weight: 400;
   margin-bottom: 15px;
+  font-size: 15px;
 }
 
 .list-header-stt {
@@ -302,84 +295,6 @@ export default {
   display: flex;
   justify-content: center;
   align-self: center;
-}
-
-/*  */
-.list-row {
-  display: flex;
-  padding: 7px 0;
-}
-
-.list-row:hover {
-  background-color: rgb(51, 53, 55);
-  border-radius: 5px;
-}
-
-.list-row:hover .list-row-album a {
-  color: white;
-}
-
-.list-row:hover .singer a {
-  color: white;
-}
-
-.list-row-stt {
-  width: 5%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 17px;
-}
-
-.list-row-title {
-  display: flex;
-  align-items: center;
-  width: 35%;
-}
-
-.list-row-title img {
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
-  margin-right: 13px;
-}
-
-.list-row-title a {
-  color: rgb(167, 167, 167);
-}
-
-.list-row-title a:hover {
-  text-decoration: underline white;
-}
-
-.list-row-title h3 {
-  margin: 0;
-  font-weight: 400;
-  color: white;
-}
-
-.list-row-album {
-  width: 25%;
-  align-self: center;
-}
-
-.list-row-album a {
-  color: rgb(167, 167, 167);
-}
-
-.list-row-album a:hover {
-  text-decoration: underline white;
-}
-
-.list-row-date {
-  width: 25%;
-  align-self: center;
-}
-
-.list-row-time {
-  width: 10%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 18px;
 }
 </style>

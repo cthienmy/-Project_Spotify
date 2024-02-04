@@ -73,9 +73,12 @@
         <ion-icon name="reorder-four-outline"></ion-icon>
       </button>
       <div class="footer-right2"><i class="el-icon-set-up"></i></div>
-      <div class="footer-right2">
+      <button class="footer-right2" v-on:click="stopVolume()" v-if="stopVl === false">
         <ion-icon name="volume-high-outline"></ion-icon>
-      </div>
+      </button>
+      <button class="footer-right2" v-on:click="stopVolume()" v-else>
+        <ion-icon name="volume-mute-outline"></ion-icon>
+      </button>
       <!-- * volume bar -->
       <input class="footer-right3" type="range" max="100" min="0" v-bind:value="containerFooterVariable.valueVolume"
         v-on:change="changeVolume" />
@@ -83,6 +86,7 @@
       <button class="footer-right2">
         <ion-icon name="desktop-outline"></ion-icon>
       </button>
+
     </div>
   </div>
 </template>
@@ -99,6 +103,8 @@ export default {
     containerFooterVariable: Object,
     changeSong: Function,
     changeVolume: Function,
+    stopVolume: Function,
+    stopVl: Boolean,
     // enterPlay: Function,
 
 
