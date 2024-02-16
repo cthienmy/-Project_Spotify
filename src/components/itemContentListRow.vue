@@ -167,7 +167,7 @@ export default {
 }
 
 .list-row-time {
-  margin: 0 10px 0 20px;
+  margin: 0 5px 0 20px;
 }
 
 .list-row-heart {
@@ -180,6 +180,7 @@ export default {
   align-items: center;
   font-size: 18px;
   visibility: visible;
+  
 }
 
 .list-row-other {
@@ -191,7 +192,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 13px;
   color: aliceblue;
   visibility: visible;
 }

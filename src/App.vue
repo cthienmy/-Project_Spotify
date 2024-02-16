@@ -435,10 +435,14 @@ export default {
         this.containerFooterVariable.tagAudio.volume = 0.0;
         this.stopVl = !this.stopVl;
         console.log("volume2:", this.containerFooterVariable.tagAudio.volume);
+        // chuyen thanh volume =0 %
+        this.containerFooterVariable.valueVolume = 0;
       } else {
         this.containerFooterVariable.tagAudio.volume = 1.0;
         this.stopVl = !this.stopVl;
         console.log("volume3:", this.containerFooterVariable.tagAudio.volume);
+        // chuyen thanh volume len 100%
+        this.containerFooterVariable.valueVolume = 100;
       };
 
     },
