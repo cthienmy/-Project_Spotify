@@ -224,8 +224,8 @@ export default {
 
       this.containerFooterVariable.totleTime = Math.floor(this.containerFooterVariable.tagAudio.duration);
 
-      console.log("==== this.containerFooterVariable.totleTime",this.containerFooterVariable.totleTime);
-      console.log("==== this.containerFooterVariable.timePlay",this.containerFooterVariable.timePlay);
+      console.log("==== this.containerFooterVariable.totleTime", this.containerFooterVariable.totleTime);
+      console.log("==== this.containerFooterVariable.timePlay", this.containerFooterVariable.timePlay);
 
       // lấy thời gian chạy hiện tại chia cho tổng thời gian bài hát *100 = % dung lg bài hát chạy hiên tại
       // để gán vào thuộc tính value của thanh bar có tổng 100%
@@ -394,10 +394,10 @@ export default {
         valueVolume: 100,
       };
       this.containerFooterVariable.tagAudio = new Audio(this.containerFooter.listRow[this.containerFooterVariable.index].music);
-      
+
       // this.containerFooterVariable.tagAudio.ontimeupdate = this.setTime;
       this.containerFooterVariable.tagAudio.play();
-      // this.containerFooterVariable.tagAudio.ontimeupdate= this.setTime;
+      this.containerFooterVariable.tagAudio.ontimeupdate = this.setTime;
 
       // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
       console.log('timePlay nextSong:', this.containerFooterVariable.timePlay, 'totleTime nextSong:', this.containerFooterVariable.totleTime);
@@ -408,11 +408,24 @@ export default {
 
     },
     backSong: function () {
-      this.containerFooterVariable.index =
-        this.containerFooterVariable.index - 1;
+      this.containerFooterVariable.index = this.containerFooterVariable.index - 1;
       this.containerFooterVariable.tagAudio.pause();
-      this.containerFooterVariable.tagAudio = new Audio(
-        this.containerFooter.listRow[this.containerFooterVariable.index].music
+
+      this.containerFooterVariable = {
+        index: this.containerFooterVariable.index,
+        tagAudio: null,
+        timePlay1: "00",
+        timePlay2: "00",
+        timePlay: 0,
+        totleTime1: "00",
+        totleTime2: "00",
+        totleTime: 0,
+        value: "0",
+        statusLoop: false,
+        valueVolume: 100,
+      };
+
+      this.containerFooterVariable.tagAudio = new Audio(this.containerFooter.listRow[this.containerFooterVariable.index].music
       );
       this.containerFooterVariable.tagAudio.play();
     },
