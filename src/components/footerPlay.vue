@@ -3,7 +3,8 @@
     <!--footer-left  -->
     <div class="footer-left">
       <a href="#">
-        <img v-bind:src="containerFooter.listRow[0].titleImg" />
+        <!-- responsive -->
+        <img v-bind:src="containerFooter.listRow[0].titleImg" class=" xl:w-14 lg:w-12 md:w-10 " />
       </a>
       <div class="footer-title">
         <a href="#">
@@ -52,7 +53,8 @@
         <div class="footer-middelBottomTime">
           {{ containerFooterVariable.timePlay1 }}:{{ containerFooterVariable.timePlay2 }}
         </div>
-        <div class="footer-middelBottomPlay">
+        <!-- responsive -->
+        <div class="footer-middelBottomPlay xl:w-[450px] lg:w-80 md:w-60 w-40">
           <input class="rangebar" type="range" max="100" min="0" step="1" v-bind:value="containerFooterVariable.value"
             v-on:change="changeSong" />
           <!--  -->
@@ -138,8 +140,8 @@ export default {
 }
 
 .footer-left img {
-  width: 60px;
-  height: 705;
+  /* width: 60px; */
+  /* height: 70px; */
   border-radius: 5px;
   margin-right: 15px;
   align-self: center;
@@ -225,7 +227,7 @@ export default {
 }
 
 .footer-middelBottomPlay {
-  width: 450px;
+  /* width: 450px; */
   margin: 0 7px;
 }
 
