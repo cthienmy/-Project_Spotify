@@ -45,15 +45,20 @@ export default {
 
 <style>
 .tabBar {
-  position: fixed;
+  position: absolute;
   top: 0;
-  width: 992.7px;
+  left: 0;
+  width: 100%;
+
 }
+
 .tabBar div {
   display: flex;
   justify-content: space-between;
-  padding: 15px 0;
+  padding: 15px;
+
 }
+
 .changePage-iconleft {
   font-size: 20px;
   margin-right: 10px;
@@ -66,6 +71,7 @@ export default {
   color: rgb(255, 255, 255);
   border: none;
 }
+
 .changePage-iconright {
   font-size: 20px;
   width: 33px;
@@ -77,9 +83,11 @@ export default {
   color: rgb(167, 167, 167);
   border: none;
 }
+
 .explore {
   display: flex;
 }
+
 .button-explore {
   margin-right: 10px;
   font-size: 13px;
@@ -88,6 +96,7 @@ export default {
   border: none;
   font-weight: 600;
 }
+
 .button-intall {
   display: flex;
   align-items: center;
@@ -100,6 +109,7 @@ export default {
   border: none;
   font-weight: 600;
 }
+
 .button-intall div {
   font-size: 12px;
   /* font-weight: 900;??????? */
@@ -115,9 +125,11 @@ export default {
   color: rgb(255, 255, 255);
   border: 2px solid rgb(255, 255, 255);
 }
+
 .button-intall p {
   margin: 0;
 }
+
 .explore-iconbell {
   font-size: 18px;
   margin-right: 10px;
@@ -130,6 +142,7 @@ export default {
   color: rgb(167, 167, 167);
   border: none;
 }
+
 .explore-iconuser {
   font-size: 18px;
   width: 33px;

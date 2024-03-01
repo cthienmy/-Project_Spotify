@@ -1,17 +1,17 @@
 <template>
-  <div class="footer">
+  <div class="footer xl:p-3.5 lg:p-2.5 md:p-2 p-1.5 xl:h-[13.5vh] lg:h-[11.5vh] md:h-[10vh] h-[8vh]">
     <!--footer-left  -->
     <div class="footer-left">
-      <a href="#">
+      <a href="#" class="footer-left-img">
         <!-- responsive -->
-        <img v-bind:src="containerFooter.listRow[0].titleImg" class=" xl:w-14 lg:w-12 md:w-10 " />
+        <img v-bind:src="containerFooter.listRow[0].titleImg" class=" xl:w-14 lg:w-12 w-10 " />
       </a>
-      <div class="footer-title">
+      <div class="footer-title ">
         <a href="#">
-          <h5>{{ containerFooter.listRow[0].titleH3 }}</h5>
+          <h5 class="footer-title-p lg:text-[16px] text-[13px]">{{ containerFooter.listRow[0].titleH3 }}</h5>
         </a>
         <a href="#">
-          <p>
+          <p class="footer-title-p lg:text-[11px] text-[9px]">
             {{ containerFooter.listRow[0].titleSinger1 }},
             {{ containerFooter.listRow[0].titleSinger2 }}
           </p>
@@ -20,40 +20,45 @@
       <button><i class="el-icon-circle-plus-outline"></i></button>
     </div>
     <!--footer-middel  -->
+    <!-- responsive -->
     <div class="footer-middel">
       <div class="footer-middelTop">
         <!-- * play Speed -->
-        <button class="footer-middelTop1" type="radio" v-on:click="playSpeed()">
+        <button class="footer-middelTop1 xl:text-xl lg:text-lg md:text-base text-sm" type="radio"
+          v-on:click="playSpeed()">
           2x
         </button>
         <!-- * loop Song -->
-        <button class="footer-middelTop1" v-on:click="playLoop()">
+        <button class="footer-middelTop1 xl:text-xl lg:text-lg md:text-base text-sm" v-on:click="playLoop()">
           <ion-icon name="shuffle-outline"></ion-icon>
         </button>
         <!-- * back Song -->
-        <button class="footer-middelTop1" v-on:click="backSong()" v-bind:disabled="index === 0">
+        <button class="footer-middelTop1 xl:text-xl lg:text-lg md:text-base text-sm" v-on:click="backSong()"
+          v-bind:disabled="index === 0">
           <ion-icon name="play-skip-back-outline"></ion-icon>
         </button>
         <!-- * button Play -->
         <audio id="enter-audio"></audio>
-        <button v-if="containerFooter.run === false" class="footer-middelTop3" v-on:click="enterPlay()">
+        <button v-if="containerFooter.run === false" class="footer-middelTop3 xl:text-4xl lg:text-3xl md:text-2xl text-xl"
+          v-on:click="enterPlay()">
           <ion-icon name="play-circle-outline"></ion-icon>
         </button>
         <!-- * button pause -->
-        <button v-else class="footer-middelTop3" v-on:click="enterPlay()">
+        <button v-else class="footer-middelTop3 xl:text-4xl lg:text-3xl md:text-2xl text-xl" v-on:click="enterPlay()">
           <ion-icon name="pause-circle-outline"></ion-icon>
         </button>
         <!-- * next Song -->
-        <button class="footer-middelTop1" v-on:click="nextSong()">
+        <button class="footer-middelTop1 xl:text-xl lg:text-lg md:text-base text-sm" v-on:click="nextSong()">
           <ion-icon name="play-skip-forward-outline"></ion-icon>
         </button>
       </div>
       <!-- * thanh bar % -->
+      <!-- responsive -->
       <div class="footer-middelBottom">
         <div class="footer-middelBottomTime">
           {{ containerFooterVariable.timePlay1 }}:{{ containerFooterVariable.timePlay2 }}
         </div>
-        <!-- responsive -->
+
         <div class="footer-middelBottomPlay xl:w-[450px] lg:w-80 md:w-60 w-40">
           <input class="rangebar" type="range" max="100" min="0" step="1" v-bind:value="containerFooterVariable.value"
             v-on:change="changeSong" />
@@ -66,26 +71,23 @@
     </div>
     <!--footer-right -->
     <div class="footer-right">
-      <div class="footer-right1">
-        <button>
-          <i class="el-icon-caret-right"></i>
-        </button>
-      </div>
-      <button class="footer-right2">
+
+      <button class="footer-right2 xl:text-xl lg:text-lg md:text-base text-sm">
         <ion-icon name="reorder-four-outline"></ion-icon>
       </button>
-      <div class="footer-right2"><i class="el-icon-set-up"></i></div>
-      <button class="footer-right2" v-on:click="stopVolume()" v-if="stopVl === false">
+      <div class="footer-right2 xl:text-xl lg:text-lg md:text-base text-sm"><i class="el-icon-set-up"></i></div>
+      <button class="footer-right2 xl:text-xl lg:text-lg md:text-base text-sm" v-on:click="stopVolume()"
+        v-if="stopVl === false">
         <ion-icon name="volume-high-outline"></ion-icon>
       </button>
-      <button class="footer-right2" v-on:click="stopVolume()" v-else>
+      <button class="footer-right2 xl:text-xl lg:text-lg md:text-base text-sm" v-on:click="stopVolume()" v-else>
         <ion-icon name="volume-mute-outline"></ion-icon>
       </button>
       <!-- * volume bar -->
-      <input class="footer-right3" type="range" max="100" min="0" v-bind:value="containerFooterVariable.valueVolume"
-        v-on:change="changeVolume" />
+      <input class="footer-right3 xl:w-28 lg:w-20 md:w-16 w-14" type="range" max="100" min="0"
+        v-bind:value="containerFooterVariable.valueVolume" v-on:change="changeVolume" />
       <!--  -->
-      <button class="footer-right2">
+      <button class="footer-right2 xl:text-xl lg:text-lg md:text-base text-sm ">
         <ion-icon name="desktop-outline"></ion-icon>
       </button>
 
@@ -128,8 +130,8 @@ export default {
 
 <style>
 .footer {
-  height: 13.5vh;
-  padding: 15px;
+  /* height: 13.5vh; */
+  /* padding: 15px; */
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
@@ -137,14 +139,18 @@ export default {
 
 .footer-left {
   display: flex;
+  box-sizing: border-box;
 }
 
 .footer-left img {
-  /* width: 60px; */
-  /* height: 70px; */
+
   border-radius: 5px;
   margin-right: 15px;
-  align-self: center;
+}
+
+.footer-left-img {
+  display: flex;
+  align-items: center;
 }
 
 .footer-title {
@@ -159,7 +165,7 @@ export default {
 }
 
 .footer-title p {
-  font-size: 11px;
+  /* font-size: 11px; */
   margin: 0;
   color: rgb(179, 179, 179);
 }
@@ -184,7 +190,7 @@ export default {
 }
 
 .footer-middelTop1 {
-  font-size: 20px;
+  /* font-size: 20px; */
   margin: 0 15px;
   align-self: center;
   display: flex;
@@ -204,7 +210,7 @@ export default {
 }
 
 .footer-middelTop3 {
-  font-size: 35px;
+  /* font-size: 35px; */
   margin: 0 15px;
   display: flex;
   padding: 0;
@@ -261,27 +267,7 @@ export default {
   display: flex;
 }
 
-.footer-right1 {
-  border: 2px solid rgb(167, 167, 167);
-  width: 12px;
-  height: 14px;
-  border-radius: 2px;
-  margin: 0 7px;
-  font-size: 12px;
-  align-self: center;
-}
 
-.footer-right1 button {
-  padding: 0;
-  background-color: rgb(0, 0, 0);
-  color: rgb(167, 167, 167);
-  height: 100%;
-  border: none;
-  border-radius: 1px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .footer-right2 {
   padding: 0;
@@ -291,11 +277,11 @@ export default {
   background-color: rgb(0, 0, 0);
   border: none;
   margin: 0 7px;
-  font-size: 20px;
+  /* font-size: 20px; */
 }
 
 .footer-right3 {
-  width: 100px;
+  /* width: 100px; */
   height: 4px;
   border-radius: 5px;
   -webkit-appearance: none;

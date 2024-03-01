@@ -442,7 +442,7 @@ export default {
       }
     },
     playSpeed: function () {
-      this.containerFooterVariable.tagAudio.playbackRate = 8;
+      this.containerFooterVariable.tagAudio.playbackRate = 2;
     },
     // tua Song sử dụng tên sự kiện "change" trong vue để bắt sự kiện sau khi ta thay đổi vị trí tua bài hát
     // event.target.value -> trỏ tới value % của thanh bar -> sau đó chuyển % đó ngược lại số giây
@@ -659,16 +659,18 @@ export default {
       rgb(18, 18, 18),
       rgb(34, 26, 29),
       rgb(91, 56, 70));
-  /* ??????????????????????????????? */
+
 
   border-radius: 8px;
   overflow-y: auto;
+
 }
 
 /*  */
 .lists {
   color: rgb(255, 255, 255);
-  padding: 55px 25px 0;
+  padding: 60px 25px 0;
+  position: relative;
 }
 
 /*  */
