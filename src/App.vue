@@ -307,6 +307,7 @@ export default {
       // 1** Neu run === false : đang Pause
       if (this.containerFooter.run === false) {
         this.containerFooter.run = !this.containerFooter.run;
+        console.log('this.containerFooter.run:', this.containerFooter.run);
         // run: False-> True 
         // 1.1--thùng chứa ban đầu chưa có gì & run=== false(Pause)
         if (this.containerFooterVariable.tagAudio === null) {
@@ -320,58 +321,21 @@ export default {
           // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
           this.containerFooterVariable.tagAudio.ontimeupdate = this.setTime;
           // * tự động chuyển bài khi phát hết
-
-
-
         }
-        // 1.2--thùng chứa ban đầu đã có & run=== false(Pause)
+        // 1.2--thùng chứa ban đầu đã có & run === false(Pause)
         else {
-          // nếu có bài hat đang phát thì dừng
-          this.containerFooterVariable.tagAudio.pause();
-          this.containerFooter.run = !this.containerFooter.run;
-          // run: False-> True 
+          this.containerFooterVariable.tagAudio.play();
 
-          // 1.2.1---thùng chứa ban đầu đã có & run=== false(Pause) & chứa Bài Hát Khac
-          if (
-            // căt di kí tự trong"" và thay băng ""-> mục dich lay link bai hat ra riêng de so sánh
-            this.containerFooterVariable.tagAudio.src.replace(
-              "http://localhost:5174", ""
-
-            ) !=
-            this.containerFooter.listRow[this.containerFooterVariable.index]
-              .music
-          ) {
-
-            // khoi taoj lai tu dau va phat nhac
-            this.containerFooterVariable.tagAudio = new Audio(
-              this.containerFooter.listRow[
-                this.containerFooterVariable.index
-              ].music
-            );
-
-            this.containerFooterVariable.tagAudio.play();
-
-
-            // phải bắt lại vị trí hiện tại của bài hát mới
-            // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
-            this.containerFooterVariable.tagAudio.ontimeupdate = this.setTime;
-
-          }
-          // 1.2.2---thùng chứa ban đầu đã có & run=== false(Pause) & chứa cùng 1 bài hát
-          else {
-            this.containerFooterVariable.tagAudio.play();
-            this.containerFooter.run = !this.containerFooter.run;
-
-          }
         }
       }
 
       // 2** Neu run=== true : đang Play
       else {
-        console.log("run2:", this.containerFooter.run);
+
         // neu itemPlay.run===true -> dừng bài hat
         this.containerFooterVariable.tagAudio.pause();
         this.containerFooter.run = !this.containerFooter.run;
+
       }
     },
 
