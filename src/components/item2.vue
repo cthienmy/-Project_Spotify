@@ -1,5 +1,5 @@
 <template>
-  <div class="container-item 2xl:basis-[19%] xl:basis-1/4 2xl:shrink xl:shrink-0">
+  <div class="container-item 2xl:basis-[19%] xl:basis-[23%] lg:basis-[31%] basis-[47%] 2xl:shrink shrink-0 mx-2.5">
     <a href="#" v-on:click="contentIn()">
       <li class="item">
         <img v-bind:src="item2.img" />
@@ -43,8 +43,8 @@ export default {
 .container-item {
   /* width: 19%; */
   /* margin: 5px; */
-  flex-shrink: 0;
-
+  /* flex-shrink: 0; */
+  box-sizing: border-box;
 }
 
 .container-item:hover {
@@ -75,14 +75,18 @@ export default {
   border-radius: 5px;
 }
 
+.item-footer {
+  box-sizing: border-box;
+}
 
 
 .item-footer h4 {
   margin: 9px 0 4px;
   color: rgb(255, 255, 255);
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+  /* text-overflow: ellipsis;
+  overflow: hidden; */
+  white-space: wrap;
+
 }
 
 .item-footer p {

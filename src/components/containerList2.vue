@@ -35,6 +35,11 @@ export default {
 </script>
 
 <style>
+.containerList2 {
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
 .containerList2 h2 {
   margin: 20px 0;
   font-size: larger;
@@ -43,6 +48,7 @@ export default {
 .list {
   display: flex;
   justify-content: space-between;
+
   /* grid-template-columns: 18% 18% 18% 18% 18%; */
   padding: 0;
   list-style-type: none;

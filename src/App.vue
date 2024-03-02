@@ -141,6 +141,7 @@
       v-bind:changeVolume="changeVolume" v-bind:stopVolume="stopVolume" v-bind:stopVl="stopVl" />
   </div>
 </template>
+
 <script>
 import containerList2 from "./components/containerList2.vue";
 import itemContent from "./components/itemContent.vue";
@@ -668,8 +669,9 @@ export default {
 /*  */
 .lists {
   color: rgb(255, 255, 255);
-  padding: 0px 25px 0;
-
+  /* padding: 0px 25px 0; */
+  box-sizing: border-box;
+  margin: 0px 25px 0;
 }
 
 /*  */
