@@ -113,12 +113,13 @@ export default {
 /* /////// */
 .container-item-header {
   color: rgb(255, 255, 255);
-  padding: 92px 25px 25px;
+  padding: 0px 25px 25px;
   background-color: rgb(84, 96, 108);
 }
 
 .container-item-header1 {
   display: flex;
+  margin-top: 20px;
 }
 
 .container-item-header img {

@@ -433,8 +433,7 @@ export default {
       if (this.statusLoop === false) {
         // tự động lặp lại
         this.containerFooterVariable.tagAudio.loop = true;
-        this.containerFooterVariable.statusLoop =
-          !this.containerFooterVariable.statusLoop;
+        this.containerFooterVariable.statusLoop = !this.containerFooterVariable.statusLoop;
       } else {
         this.containerFooterVariable.tagAudio.loop = false;
         this.containerFooterVariable.statusLoop =
@@ -650,7 +649,7 @@ export default {
   color: rgb(0, 0, 0);
   font-weight: 600;
   border-radius: 35px;
-  padding-top: 5px;
+  padding: 5px;
 }
 
 /* /// */
@@ -669,8 +668,8 @@ export default {
 /*  */
 .lists {
   color: rgb(255, 255, 255);
-  padding: 60px 25px 0;
-  position: relative;
+  padding: 0px 25px 0;
+
 }
 
 /*  */

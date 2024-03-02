@@ -1,5 +1,5 @@
 <template>
-  <div class="container-item">
+  <div class="container-item 2xl:basis-[19%] xl:basis-1/4 2xl:shrink xl:shrink-0">
     <a href="#" v-on:click="contentIn()">
       <li class="item">
         <img v-bind:src="item2.img" />
@@ -40,6 +40,13 @@ export default {
 </script>
 
 <style>
+.container-item {
+  /* width: 19%; */
+  /* margin: 5px; */
+  flex-shrink: 0;
+
+}
+
 .container-item:hover {
   position: relative;
 }
@@ -55,6 +62,7 @@ export default {
   box-sizing: border-box;
   border-radius: 8px;
   height: 270px;
+
 }
 
 .item:hover {

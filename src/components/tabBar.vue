@@ -45,9 +45,9 @@ export default {
 
 <style>
 .tabBar {
-  position: absolute;
+  position: sticky;
   top: 0;
-  left: 0;
+  /* left: 0; */
   width: 100%;
 
 }
@@ -55,7 +55,7 @@ export default {
 .tabBar div {
   display: flex;
   justify-content: space-between;
-  padding: 15px;
+  padding: 15px 15px 5px;
 
 }
 
