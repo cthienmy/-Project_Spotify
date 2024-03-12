@@ -163,6 +163,8 @@ export default {
       itemGo: "",
       albumClick: null,
       stopVl: false,
+      Volume1: 0,
+      // valueVolume: 100,
       //
       containerFooterVariable: {
         tagAudio: null,
@@ -176,6 +178,7 @@ export default {
         value: "0",
         statusLoop: false,
         valueVolume: 100,
+
       },
       //
       containerFooter: {
@@ -357,17 +360,22 @@ export default {
         value: "0",
         statusLoop: false,
         valueVolume: 100,
-      };
-      this.containerFooterVariable.tagAudio = new Audio(this.containerFooter.listRow[this.containerFooterVariable.index].music);
 
-      // this.containerFooterVariable.tagAudio.ontimeupdate = this.setTime;
+      };
+      console.log("Volume1...:", this.Volume1);
+
+
+      this.containerFooterVariable.tagAudio = new Audio(this.containerFooter.listRow[this.containerFooterVariable.index].music);
+      this.containerFooterVariable.tagAudio.volume = this.Volume1;
+      console.log("this.containerFooterVariable.tagAudio.volume next:", this.containerFooterVariable.tagAudio.volume);
+
       this.containerFooterVariable.tagAudio.play();
       this.containerFooterVariable.tagAudio.ontimeupdate = this.setTime;
 
       // * khi vị trí của video thay đổi, bắt sự thay đổi hiển thị vị trí thay đổi hiện tại bằng giây
-      console.log('timePlay nextSong:', this.containerFooterVariable.timePlay, 'totleTime nextSong:', this.containerFooterVariable.totleTime);
-      console.log('totleTime1 nextSong:', this.containerFooterVariable.totleTime1, 'totleTime2 nextSong:', this.containerFooterVariable.totleTime2);
-      console.log('this.containerFooterVariable.tagAudio nextSong:', this.containerFooterVariable.tagAudio);
+      // console.log('timePlay nextSong:', this.containerFooterVariable.timePlay, 'totleTime nextSong:', this.containerFooterVariable.totleTime);
+      // console.log('totleTime1 nextSong:', this.containerFooterVariable.totleTime1, 'totleTime2 nextSong:', this.containerFooterVariable.totleTime2);
+      // console.log('this.containerFooterVariable.tagAudio nextSong:', this.containerFooterVariable.tagAudio);
 
 
 
@@ -422,11 +430,16 @@ export default {
     changeVolume: function (event) {
       // * điều chỉnh volume [.volume: thuoc tinh set am luong]
       // target.value -> lay ra vi tri phan tram am luong roi chuyen sang thang 0.0 -1.0 am lg
-      console.log("volume1:", this.containerFooterVariable.tagAudio.volume);
-      this.containerFooterVariable.tagAudio.volume = (event.target.value * 0.1) / 10;
-      console.log("volume%:", (event.target.value * 0.1) / 10);
 
-      console.log("volume2:", this.containerFooterVariable.tagAudio.volume);
+      this.Volume1 = (event.target.value * 0.1) / 10;
+
+      console.log("Volume1:", this.Volume1);
+
+      this.containerFooterVariable.tagAudio.volume = this.Volume1;
+      console.log("this.containerFooterVariable.tagAudio.volume...:", this.containerFooterVariable.tagAudio.volume);
+
+      // console.log("volume2:", this.containerFooterVariable.tagAudio.volume);
+
       this.containerFooterVariable.valueVolume = this.containerFooterVariable.tagAudio.volume * 100;
 
 
