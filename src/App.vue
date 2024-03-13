@@ -163,8 +163,11 @@ export default {
       itemGo: "",
       albumClick: null,
       stopVl: false,
-      volume1: 0,
+      volume1: 1.0,
       valueVolume1: 100,
+      speedSong: false,
+      speed: 1,
+
       //
       containerFooterVariable: {
         tagAudio: null,
@@ -178,6 +181,7 @@ export default {
         value: "0",
         statusLoop: false,
         valueVolume: 100,
+
 
       },
       //
@@ -283,22 +287,28 @@ export default {
         console.log('this.containerFooterVariable.tagAudio1:', this.containerFooterVariable.tagAudio);
         this.containerFooterVariable.tagAudio = new Audio(this.containerFooter.listRow[this.containerFooterVariable.index].music);
         console.log('this.containerFooterVariable.tagAudio2:', this.containerFooterVariable.tagAudio);
+        // giu am luong dc set 
+        this.containerFooterVariable.tagAudio.volume = this.volume1;
+        this.containerFooterVariable.valueVolume = this.valueVolume1;
+        // giu toc do phat dc chon
+        this.containerFooterVariable.tagAudio.playbackRate = this.speed;
+
         this.containerFooterVariable.tagAudio.play();
         // phải bắt lại vị trí hiện tại của bài hát mới
         this.containerFooterVariable.tagAudio.ontimeupdate = this.setTime;
-        console.log('totleTime:', this.containerFooterVariable.totleTime);
-        console.log('totleTime1:', this.containerFooterVariable.totleTime1);
-        console.log('totleTime2:', this.containerFooterVariable.totleTime2);
-        console.log('timePlay:', this.containerFooterVariable.timePlay);
+        // console.log('totleTime:', this.containerFooterVariable.totleTime);
+        // console.log('totleTime1:', this.containerFooterVariable.totleTime1);
+        // console.log('totleTime2:', this.containerFooterVariable.totleTime2);
+        // console.log('timePlay:', this.containerFooterVariable.timePlay);
 
 
       } else {
 
         this.containerFooterVariable.tagAudio.ontimeupdate = this.setTime;
-        console.log('this.containerFooterVariable.totleTime:', this.containerFooterVariable.totleTime);
-        console.log('this.containerFooterVariable.totleTime1:', this.containerFooterVariable.totleTime1);
-        console.log('this.containerFooterVariable.totleTime2:', this.containerFooterVariable.totleTime2);
-        console.log('this.containerFooterVariable.timePlayyyy:', this.containerFooterVariable.timePlay);
+        // console.log('this.containerFooterVariable.totleTime:', this.containerFooterVariable.totleTime);
+        // console.log('this.containerFooterVariable.totleTime1:', this.containerFooterVariable.totleTime1);
+        // console.log('this.containerFooterVariable.totleTime2:', this.containerFooterVariable.totleTime2);
+        // console.log('this.containerFooterVariable.timePlayyyy:', this.containerFooterVariable.timePlay);
       }
 
     },
@@ -347,7 +357,6 @@ export default {
 
       this.containerFooterVariable.tagAudio.pause();
 
-
       this.containerFooterVariable = {
         index: this.containerFooterVariable.index,
         tagAudio: null,
@@ -361,14 +370,17 @@ export default {
         statusLoop: false,
         valueVolume: 100,
 
+
       };
       // console.log("Volume1...:", this.volume1);
 
 
       this.containerFooterVariable.tagAudio = new Audio(this.containerFooter.listRow[this.containerFooterVariable.index].music);
       this.containerFooterVariable.tagAudio.volume = this.volume1;
-      // console.log("this.containerFooterVariable.tagAudio.volume next:", this.containerFooterVariable.tagAudio.volume);
+
+      // console.log("this.containerFooterVariable.tagAudio.volume next....:", this.containerFooterVariable.tagAudio.volume);
       this.containerFooterVariable.valueVolume = this.valueVolume1;
+      this.containerFooterVariable.tagAudio.playbackRate = this.speed;
 
       this.containerFooterVariable.tagAudio.play();
       this.containerFooterVariable.tagAudio.ontimeupdate = this.setTime;
@@ -397,6 +409,7 @@ export default {
         value: "0",
         statusLoop: false,
         valueVolume: 100,
+
       };
 
       this.containerFooterVariable.tagAudio = new Audio(this.containerFooter.listRow[this.containerFooterVariable.index].music);
@@ -404,22 +417,40 @@ export default {
       this.containerFooterVariable.tagAudio.volume = this.volume1;
       // console.log("this.containerFooterVariable.tagAudio.volume next:", this.containerFooterVariable.tagAudio.volume);
       this.containerFooterVariable.valueVolume = this.valueVolume1;
+      this.containerFooterVariable.tagAudio.playbackRate = this.speed;
 
       this.containerFooterVariable.tagAudio.play();
     },
     playLoop: function () {
-      if (this.statusLoop === false) {
+      // this.containerFooterVariable.tagAudio.loop = true;
+      if (this.containerFooterVariable.statusLoop === false) {
         // tự động lặp lại
+        console.log('this.statusLoop1:', this.containerFooterVariable.statusLoop);
         this.containerFooterVariable.tagAudio.loop = true;
         this.containerFooterVariable.statusLoop = !this.containerFooterVariable.statusLoop;
+        console.log('this.statusLoop2:', this.containerFooterVariable.statusLoop);
       } else {
+        console.log('this.statusLoop3:', this.containerFooterVariable.statusLoop);
         this.containerFooterVariable.tagAudio.loop = false;
-        this.containerFooterVariable.statusLoop =
-          !this.containerFooterVariable.statusLoop;
+        this.containerFooterVariable.statusLoop = !this.containerFooterVariable.statusLoop;
+        console.log('this.statusLoop4:', this.containerFooterVariable.statusLoop);
       }
     },
     playSpeed: function () {
-      this.containerFooterVariable.tagAudio.playbackRate = 2;
+
+      if (this.speedSong === false) {
+        console.log('this.speedSong1:', this.speedSong);
+        this.speed = 2;
+        this.containerFooterVariable.tagAudio.playbackRate = this.speed;
+        console.log('this.containerFooterVariable.tagAudio.playbackRate:', this.containerFooterVariable.tagAudio.playbackRate);
+        this.speedSong = !this.speedSong;
+        console.log('this.speedSong2:', this.speedSong);
+
+      } else {
+        this.speed = 1;
+        this.containerFooterVariable.tagAudio.playbackRate = this.speed;
+        this.speedSong = !this.speedSong;
+      }
     },
     // tua Song sử dụng tên sự kiện "change" trong vue để bắt sự kiện sau khi ta thay đổi vị trí tua bài hát
     // event.target.value -> trỏ tới value % của thanh bar -> sau đó chuyển % đó ngược lại số giây
