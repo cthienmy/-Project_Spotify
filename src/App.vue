@@ -138,7 +138,8 @@
     <footerPlay v-bind:containerFooter="containerFooter" v-bind:nextSong="nextSong" v-bind:backSong="backSong"
       v-on:clickButtonPlay="enterPlay" v-bind:playLoop="playLoop" v-bind:playSpeed="playSpeed"
       v-bind:containerFooterVariable="containerFooterVariable" v-bind:changeSong="changeSong"
-      v-bind:changeVolume="changeVolume" v-bind:stopVolume="stopVolume" v-bind:stopVl="stopVl" />
+      v-bind:changeVolume="changeVolume" v-bind:stopVolume="stopVolume" v-bind:stopVl="stopVl"
+      v-bind:speedSong="speedSong" />
   </div>
 </template>
 

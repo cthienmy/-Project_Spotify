@@ -24,12 +24,20 @@
     <div class="footer-middel">
       <div class="footer-middelTop">
         <!-- * play Speed -->
-        <button class="footer-middelTop1 xl:text-xl lg:text-lg md:text-base text-sm" type="radio"
+        <button v-if="speedSong === false" class="footer-middelTop1 xl:text-xl lg:text-lg md:text-base text-sm"
+          type="radio" v-on:click="playSpeed()">
+          2x
+        </button>
+        <button v-else class="footer-middelTop11 xl:text-xl lg:text-lg md:text-base text-sm" type="radio"
           v-on:click="playSpeed()">
           2x
         </button>
         <!-- * loop Song -->
-        <button class="footer-middelTop1 xl:text-xl lg:text-lg md:text-base text-sm" v-on:click="playLoop()">
+        <button v-if="containerFooterVariable.statusLoop === false"
+          class="footer-middelTop1 xl:text-xl lg:text-lg md:text-base text-sm" v-on:click="playLoop()">
+          <ion-icon name="shuffle-outline"></ion-icon>
+        </button>
+        <button v-else class="footer-middelTop11 xl:text-xl lg:text-lg md:text-base text-sm" v-on:click="playLoop()">
           <ion-icon name="shuffle-outline"></ion-icon>
         </button>
         <!-- * back Song -->
@@ -39,8 +47,8 @@
         </button>
         <!-- * button Play -->
         <audio id="enter-audio"></audio>
-        <button v-if="containerFooter.run === false" class="footer-middelTop3 xl:text-4xl lg:text-3xl md:text-2xl text-xl"
-          v-on:click="enterPlay()">
+        <button v-if="containerFooter.run === false"
+          class="footer-middelTop3 xl:text-4xl lg:text-3xl md:text-2xl text-xl" v-on:click="enterPlay()">
           <ion-icon name="play-circle-outline"></ion-icon>
         </button>
         <!-- * button pause -->
@@ -109,7 +117,7 @@ export default {
     changeVolume: Function,
     stopVolume: Function,
     stopVl: Boolean,
-    // enterPlay: Function,
+    speedSong: Boolean,
 
 
   },
@@ -198,6 +206,18 @@ export default {
   cursor: auto;
   background-color: black;
   color: rgb(179, 179, 179);
+  border: none;
+}
+
+.footer-middelTop11 {
+  /* font-size: 20px; */
+  margin: 0 15px;
+  align-self: center;
+  display: flex;
+  padding: 0;
+  cursor: auto;
+  background-color: black;
+  color: rgb(30, 215, 96);
   border: none;
 }
 
