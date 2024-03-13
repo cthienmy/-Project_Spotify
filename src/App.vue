@@ -163,8 +163,8 @@ export default {
       itemGo: "",
       albumClick: null,
       stopVl: false,
-      Volume1: 0,
-      // valueVolume: 100,
+      volume1: 0,
+      valueVolume1: 100,
       //
       containerFooterVariable: {
         tagAudio: null,
@@ -362,12 +362,13 @@ export default {
         valueVolume: 100,
 
       };
-      console.log("Volume1...:", this.Volume1);
+      // console.log("Volume1...:", this.volume1);
 
 
       this.containerFooterVariable.tagAudio = new Audio(this.containerFooter.listRow[this.containerFooterVariable.index].music);
-      this.containerFooterVariable.tagAudio.volume = this.Volume1;
-      console.log("this.containerFooterVariable.tagAudio.volume next:", this.containerFooterVariable.tagAudio.volume);
+      this.containerFooterVariable.tagAudio.volume = this.volume1;
+      // console.log("this.containerFooterVariable.tagAudio.volume next:", this.containerFooterVariable.tagAudio.volume);
+      this.containerFooterVariable.valueVolume = this.valueVolume1;
 
       this.containerFooterVariable.tagAudio.play();
       this.containerFooterVariable.tagAudio.ontimeupdate = this.setTime;
@@ -398,8 +399,12 @@ export default {
         valueVolume: 100,
       };
 
-      this.containerFooterVariable.tagAudio = new Audio(this.containerFooter.listRow[this.containerFooterVariable.index].music
-      );
+      this.containerFooterVariable.tagAudio = new Audio(this.containerFooter.listRow[this.containerFooterVariable.index].music);
+
+      this.containerFooterVariable.tagAudio.volume = this.volume1;
+      // console.log("this.containerFooterVariable.tagAudio.volume next:", this.containerFooterVariable.tagAudio.volume);
+      this.containerFooterVariable.valueVolume = this.valueVolume1;
+
       this.containerFooterVariable.tagAudio.play();
     },
     playLoop: function () {
@@ -431,33 +436,38 @@ export default {
       // * điều chỉnh volume [.volume: thuoc tinh set am luong]
       // target.value -> lay ra vi tri phan tram am luong roi chuyen sang thang 0.0 -1.0 am lg
 
-      this.Volume1 = (event.target.value * 0.1) / 10;
+      this.volume1 = (event.target.value * 0.1) / 10;
 
-      console.log("Volume1:", this.Volume1);
+      // console.log("Volume1:", this.volume1);
 
-      this.containerFooterVariable.tagAudio.volume = this.Volume1;
-      console.log("this.containerFooterVariable.tagAudio.volume...:", this.containerFooterVariable.tagAudio.volume);
+      this.containerFooterVariable.tagAudio.volume = this.volume1;
+      // console.log("this.containerFooterVariable.tagAudio.volume...:", this.containerFooterVariable.tagAudio.volume);
 
       // console.log("volume2:", this.containerFooterVariable.tagAudio.volume);
 
-      this.containerFooterVariable.valueVolume = this.containerFooterVariable.tagAudio.volume * 100;
+      this.valueVolume1 = this.volume1 * 100;
+      this.containerFooterVariable.valueVolume = this.valueVolume1;
 
 
     },
     stopVolume: function () {
-      console.log("volume1:", this.containerFooterVariable.tagAudio);
+      // console.log("volume1:", this.containerFooterVariable.tagAudio);
       if (this.stopVl === false) {
-        this.containerFooterVariable.tagAudio.volume = 0.0;
+        this.volume1 = 0.0;
+        this.containerFooterVariable.tagAudio.volume = this.volume1;
         this.stopVl = !this.stopVl;
-        console.log("volume2:", this.containerFooterVariable.tagAudio.volume);
+        // console.log("volume2:", this.containerFooterVariable.tagAudio.volume);
         // chuyen thanh volume =0 %
-        this.containerFooterVariable.valueVolume = 0;
+        this.valueVolume1 = 0;
+        this.containerFooterVariable.valueVolume = this.valueVolume1;
       } else {
-        this.containerFooterVariable.tagAudio.volume = 1.0;
+        this.volume1 = 1.0;
+        this.containerFooterVariable.tagAudio.volume = this.volume1;
         this.stopVl = !this.stopVl;
-        console.log("volume3:", this.containerFooterVariable.tagAudio.volume);
+        // console.log("volume3:", this.containerFooterVariable.tagAudio.volume);
         // chuyen thanh volume len 100%
-        this.containerFooterVariable.valueVolume = 100;
+        this.valueVolume1 = 100;
+        this.containerFooterVariable.valueVolume = this.valueVolume1;
       };
 
     },
